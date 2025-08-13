@@ -1,0 +1,29 @@
+//
+//  Product.swift
+//  APIchallenge
+//
+//  Created by João Pedro Teixeira de Carvalho on 13/08/25.
+//
+import Foundation
+
+struct Product {
+    let id: Int
+    let title: String
+    let description: String
+    let category: String
+    let price: Double
+    let tags: [String]
+    let thumbnail: String
+    
+    var isFavourite: Bool = false
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case description
+        case category
+        case price
+        case tags
+        case thumbnail
+    }
+}
