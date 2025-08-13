@@ -11,7 +11,7 @@ struct TestView: View {
 
     var text: String {
         viewModel.products.values.map {
-            "\($0.id): \($0.title)"
+            "\($0.id): \($0.title), \($0.category.rawValue)"
         }.joined(separator: "\n")
     }
 
@@ -25,7 +25,7 @@ struct TestView: View {
             }
         }
         .task {
-            await viewModel.fetchAllProducts()
+            await viewModel.fetch()
         }
 
     }

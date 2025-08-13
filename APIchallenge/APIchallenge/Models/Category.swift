@@ -6,33 +6,33 @@
 //
 import Foundation
 
-enum ProductCategories: String, Codable, Identifiable {
+enum Category: String, Codable, Identifiable {
     var id: String { rawValue }
-    
-    case beauty = "Beauty"
-    case fragrances = "Fragrances"
-    case furniture = "Furniture"
-    case groceries = "Groceries"
-    case homeDecoration = "Home decoration"
-    case kitchenAccessories = "Kitchen accessories"
-    case laptop = "Laptop"
-    case mensShirts = "Mens shirts"
-    case mensShoes = "Mens shoes"
-    case mensWatches = "Mens watches"
-    case mobileAccessories = "Mobile accessories"
-    case motorcycle = "Motorcycle"
-    case skinCare = "Skin care"
-    case smartphones = "Smartphones"
-    case sportsAccessories = "Sports accessories"
-    case sunglasses = "Sunglasses"
-    case tablets = "Tablets"
-    case tops = "Tops"
-    case vehicle = "Vehicle"
-    case womensBags = "Womens bags"
-    case womensDresses = "Womens dresses"
-    case womensJewellery = "Womens jewellery"
-    case womensShoes = "Womens shoes"
-    case womensWatches = "Womens watches"
+
+    case beauty = "beauty"
+    case fragrances = "fragrances"
+    case furniture = "furniture"
+    case groceries = "groceries"
+    case homeDecoration = "home-decoration"
+    case kitchenAccessories = "kitchen-accessories"
+    case laptops = "laptops"
+    case mensShirts = "mens-shirts"
+    case mensShoes = "mens-shoes"
+    case mensWatches = "mens-watches"
+    case mobileAccessories = "mobile-accessories"
+    case motorcycle = "motorcycle"
+    case skinCare = "skincare"
+    case smartphones = "smartphones"
+    case sportsAccessories = "sports-accessories"
+    case sunglasses = "sunglasses"
+    case tablets = "tablets"
+    case tops = "tops"
+    case automotive = "automotive"
+    case womensBags = "womens-bags"
+    case womensDresses = "womens-dresses"
+    case womensJewellery = "womens-jewellery"
+    case womensShoes = "womens-shoes"
+    case womensWatches = "womens-watches"
     
     var imageName: String {
         switch self {
@@ -48,7 +48,7 @@ enum ProductCategories: String, Codable, Identifiable {
             return "lamp.table.fill"
         case .kitchenAccessories:
             return "fork.knife"
-        case .laptop:
+        case .laptops:
             return "laptopcomputer"
         case .mensShirts:
             return "tshirt.fill"
@@ -72,7 +72,7 @@ enum ProductCategories: String, Codable, Identifiable {
             return "ipad"
         case .tops:
             return "jacket.fill"
-        case .vehicle:
+        case .automotive:
             return "car.fill"
         case .womensBags:
             return "handbag.fill"

@@ -20,7 +20,7 @@ struct Product: Decodable {
     let id: Int
     let title: String
     let description: String
-    let category: String
+    let category: Category
     let price: Double
     let tags: [String]
     let thumbnail: String

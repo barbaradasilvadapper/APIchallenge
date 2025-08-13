@@ -23,8 +23,18 @@ class Service: ServiceProtocol {
         return response.productsDict
     }
     
-    func fetchAllCategories() async throws -> [String] {
-        return []
+    func fetchAllCategories() async throws -> [Category] {
+        let urlString = "\(baseURL)/products/category-list"
+        
+        guard let url = URL(string: urlString) else {
+            throw URLError(.badURL)
+        }
+        
+        let (data, _) = try await URLSession.shared.data(from: url)
+        // DummyJSON returns an array of strings (category slugs), not an object with a "categories" key
+        let slugs = try JSONDecoder().decode([String].self, from: data)
+        // Only keep the categories we know how to display
+        return slugs.compactMap(Category.init(rawValue:))
     }
     
     

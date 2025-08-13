@@ -8,6 +8,7 @@ import Foundation
 
 protocol ViewModelProtocol {
     var products: [Int: Product] { get }
+    var categories: [Category] { get }
     var isLoading: Bool { get }
-    func fetchAllProducts() async
+    func fetch() async
 }

@@ -8,5 +8,5 @@ import Foundation
 
 protocol ServiceProtocol {
     func fetchAllProducts() async throws -> [Int: Product]
-    func fetchAllCategories() async throws -> [String]
+    func fetchAllCategories() async throws -> [Category]
 }

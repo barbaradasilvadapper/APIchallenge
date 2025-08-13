@@ -9,7 +9,13 @@ import Foundation
 @Observable
 class ViewModel: ViewModelProtocol {
     var products: [Int: Product] = [:]
+    var categories: [Category] = []
     var isLoading: Bool = true
+    
+    func fetch() async {
+        await fetchAllProducts()
+        await fetchCategories()
+    }
     
     private let service: ServiceProtocol
 
@@ -28,4 +34,17 @@ class ViewModel: ViewModelProtocol {
         
         isLoading = false
     }
+    
+    func fetchCategories() async {
+        isLoading = true
+        
+        do {
+            categories = try await service.fetchAllCategories()
+        } catch {
+            print("Error fetching categories: \(error.localizedDescription)")
+        }
+        
+        isLoading = false
+    }
+    
 }
