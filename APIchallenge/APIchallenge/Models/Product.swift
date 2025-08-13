@@ -6,7 +6,11 @@
 //
 import Foundation
 
-struct Product {
+struct ProductResponse: Decodable {
+    let products: [Product]
+}
+
+struct Product: Decodable {
     let id: Int
     let title: String
     let description: String
