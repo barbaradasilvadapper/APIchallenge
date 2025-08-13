@@ -4,14 +4,15 @@
 //
 //  Created by João Pedro Teixeira de Carvalho on 13/08/25.
 //
-
 import SwiftUI
 
 struct TestView: View {
     let viewModel: ViewModel
 
     var text: String {
-        viewModel.products.description
+        viewModel.products.values.map {
+            "\($0.id): \($0.title)"
+        }.joined(separator: "\n")
     }
 
     var body: some View {

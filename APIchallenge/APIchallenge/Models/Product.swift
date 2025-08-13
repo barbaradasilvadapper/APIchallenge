@@ -8,6 +8,12 @@ import Foundation
 
 struct ProductResponse: Decodable {
     let products: [Product]
+    
+    var productsDict: [Int: Product] {
+        products.reduce(into: [:]) { result, product in
+            result[product.id] = product
+        }
+    }
 }
 
 struct Product: Decodable {

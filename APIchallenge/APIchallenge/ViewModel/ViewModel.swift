@@ -8,7 +8,7 @@ import Foundation
 
 @Observable
 class ViewModel: ViewModelProtocol {
-    var products: [Product] = []
+    var products: [Int: Product] = [:]
     var isLoading: Bool = true
     
     private let service: ServiceProtocol
