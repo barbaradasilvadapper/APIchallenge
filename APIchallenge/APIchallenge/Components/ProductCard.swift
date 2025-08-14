@@ -1,0 +1,57 @@
+//
+//  component.swift
+//  APIchallenge
+//
+//  Created by Bárbara Dapper on 13/08/25.
+//
+
+import SwiftUI
+
+struct ProductCard: View {
+    
+    @State var product: Product
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 16) {
+            AsyncImage(url: URL(string: product.thumbnail)) { image in
+                image.resizable()
+            } placeholder: {
+                Image(.bag)
+            }
+            .frame(width: 160, height: 160)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            
+            VStack(alignment: .leading, spacing: 24) {
+                HStack(spacing: 4){
+                    Text(product.category.uppercased())
+                        .font(.footnote)
+                        .foregroundStyle(.labelsSecondary)
+                    Spacer()
+                    
+                    FavoriteButton(product: $product)
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(product.title)
+                        .font(.subheadline)
+                        .foregroundStyle(.labelsPrimary)
+                    
+                    Text("US$ \(String(format: "%.2f", product.price))")
+                        .font(.headline)
+                        .foregroundStyle(.labelsPrimary)
+                }
+            }
+            .padding(.trailing, 8)
+            .padding(.top, 8)
+        }
+        .padding(8)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .foregroundStyle(.fillsTertiary)
+        )
+    }
+}
+
+#Preview {
+    ProductCard(product: .init(id: 2, title: "Product name with two or more lines goes here", description: "nothing", category: "category", price: 0, thumbnail: "", isFavourite: false))
+}

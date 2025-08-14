@@ -22,7 +22,6 @@ struct Product: Decodable {
     let description: String
     let category: Category
     let price: Double
-    let tags: [String]
     let thumbnail: String
     
     var isFavourite: Bool = false

@@ -10,10 +10,10 @@ import SwiftData
 
 @main
 struct APIchallengeApp: App {
-
+    
     var body: some Scene {
         WindowGroup {
-            TestView(viewModel: ViewModel(service: Service()))
+            //ContentView()
         }
     }
 }
