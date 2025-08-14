@@ -6,11 +6,21 @@
 //
 import Foundation
 
-struct Product {
+struct ProductResponse: Decodable {
+    let products: [Product]
+    
+    var productsDict: [Int: Product] {
+        products.reduce(into: [:]) { result, product in
+            result[product.id] = product
+        }
+    }
+}
+
+struct Product: Decodable {
     let id: Int
     let title: String
     let description: String
-    let category: String
+    let category: Category
     let price: Double
     let thumbnail: String
     
