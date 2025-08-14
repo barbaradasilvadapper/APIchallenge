@@ -6,7 +6,7 @@
 //
 import Foundation
 
-enum Category: String, Codable, Identifiable {
+enum Category: String, Codable, Identifiable, Hashable {
     var id: String { rawValue }
 
     case beauty = "beauty"

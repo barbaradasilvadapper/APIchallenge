@@ -13,7 +13,7 @@ struct APIchallengeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            //ContentView()
+            TabBar()
         }
     }
 }
