@@ -13,6 +13,10 @@ struct TestView: View {
         viewModel.products.values.map {
             "\($0.id): \($0.title), \($0.category.rawValue)"
         }.joined(separator: "\n")
+        
+//        viewModel.categories.map {
+//            "\($0.id): \($0.rawValue)"
+//        }.joined(separator: "\n")
     }
 
     var body: some View {
