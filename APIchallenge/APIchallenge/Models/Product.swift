@@ -12,7 +12,6 @@ struct Product {
     let description: String
     let category: String
     let price: Double
-    let tags: [String]
     let thumbnail: String
     
     var isFavourite: Bool = false
