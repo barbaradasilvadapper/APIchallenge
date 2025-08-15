@@ -30,18 +30,7 @@ struct Categories: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            ZStack {
-                Color.fillsTertiary
-                    .frame(width: 361, height: 36)
-
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                    
-                    TextField("Search", text: $searchText)
-                }
-                .padding(.horizontal)
-            }
-            .padding(.horizontal)
+            SearchBar(searchText: $searchText)
 
             if let topCategories {
                 HStack {
