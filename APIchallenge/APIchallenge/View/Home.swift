@@ -9,8 +9,10 @@ import SwiftUI
 
 struct Home: View {
 
-    var viewModel: ViewModelProtocol
-    var dealOfTheDay: Product? { viewModel.products.values.first }
+    var viewModel: any ViewModelProtocol
+    var dealOfTheDay: Product? {
+        viewModel.products.values.first
+    }
     
     @State var selectedProduct: Product?
     @State var hasAppeared: Bool = false

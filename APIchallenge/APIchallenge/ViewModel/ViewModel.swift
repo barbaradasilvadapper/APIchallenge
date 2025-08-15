@@ -14,8 +14,10 @@ class ViewModel: ViewModelProtocol {
     let defaultProduct = Product(id: -1, title: "Default product", description: "default description", category: .beauty, price: -1, thumbnail: "", isFavourite: false)
     
     func fetch() async {
+        isLoading = true
         await fetchAllProducts()
         await fetchCategories()
+        isLoading = false
     }
     
     private let service: ServiceProtocol
@@ -44,6 +46,8 @@ class ViewModel: ViewModelProtocol {
         } catch {
             print("Error fetching categories: \(error.localizedDescription)")
         }
+        
+        print(categories)
         
         isLoading = false
     }

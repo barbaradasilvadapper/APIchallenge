@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct TabBar: View {
+    
+    let vm: ViewModelProtocol = ViewModel(service: Service())
+    
     var body: some View {
         TabView {
             NavigationStack {
-                Home(viewModel: ViewModel(service: Service()))
+                Home(viewModel: vm)
             }
             .tabItem {
                 Label("Home", systemImage: "house")
             }
             
             NavigationStack {
-                
+                Categories(viewModel: vm)
             }
             .tabItem {
                 Label("Categories", systemImage: "square.grid.2x2")
