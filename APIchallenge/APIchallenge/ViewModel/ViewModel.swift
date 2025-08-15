@@ -5,6 +5,8 @@
 //  Created by João Pedro Teixeira de Carvalho on 13/08/25.
 //
 import Foundation
+import SwiftData
+import SwiftUI
 
 @Observable
 class ViewModel: ViewModelProtocol {
@@ -21,6 +23,7 @@ class ViewModel: ViewModelProtocol {
     }
     
     private let service: ServiceProtocol
+    
 
     init(service: ServiceProtocol) {
         self.service = service

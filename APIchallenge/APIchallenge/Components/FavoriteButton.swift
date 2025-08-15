@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoriteButton: View {
-    
+
     var size: Font
     
     @Binding var product: Product
@@ -20,7 +20,6 @@ struct FavoriteButton: View {
             } label: {
                 Image(systemName: product.isFavourite ? "heart.fill" : "heart")
                     .font(size)
-//                    .frame(width: size.rawValue, height: size.rawValue)
                     .foregroundStyle(.labelsPrimary)
             }
         }
@@ -28,7 +27,7 @@ struct FavoriteButton: View {
         .background(
             RoundedRectangle(cornerRadius: 8)
                 .foregroundStyle(.fillsTertiary)
-                //.frame(width: 38, height: 38)
+
         )
     }
 }
