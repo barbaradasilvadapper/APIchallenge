@@ -44,7 +44,7 @@ struct Categories: View {
 
             List(filteredCategories) { category in
                 NavigationLink {
-
+                    CategoryFilter(category: category, viewModel: viewModel)
                 } label: {
                     Text(category.rawValue.capitalized)
                 }
