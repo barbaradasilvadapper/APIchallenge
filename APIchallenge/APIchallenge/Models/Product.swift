@@ -16,7 +16,7 @@ struct ProductResponse: Decodable {
     }
 }
 
-struct Product: Decodable {
+struct Product: Decodable, Hashable, Identifiable {
     let id: Int
     let title: String
     let description: String
@@ -32,7 +32,6 @@ struct Product: Decodable {
         case description
         case category
         case price
-        case tags
         case thumbnail
     }
 }

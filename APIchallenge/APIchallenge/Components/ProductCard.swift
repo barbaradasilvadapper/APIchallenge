@@ -19,16 +19,17 @@ struct ProductCard: View {
                 Image(.bag)
             }
             .frame(width: 160, height: 160)
+            .background(.fillsQuaternary)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
             VStack(alignment: .leading, spacing: 24) {
                 HStack(spacing: 4){
-                    Text(product.category.uppercased())
+                    Text(product.category.rawValue.uppercased())
                         .font(.footnote)
                         .foregroundStyle(.labelsSecondary)
                     Spacer()
                     
-                    FavoriteButton(product: $product)
+                    FavoriteButton(size: .title3, product: $product)
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -41,8 +42,6 @@ struct ProductCard: View {
                         .foregroundStyle(.labelsPrimary)
                 }
             }
-            .padding(.trailing, 8)
-            .padding(.top, 8)
         }
         .padding(8)
         .background(
@@ -53,5 +52,5 @@ struct ProductCard: View {
 }
 
 #Preview {
-    ProductCard(product: .init(id: 2, title: "Product name with two or more lines goes here", description: "nothing", category: "category", price: 0, thumbnail: "", isFavourite: false))
+//    ProductCard(product: .init(id: 2, title: "Product name with two or more lines goes here", description: "nothing", category: "category", price: 0, thumbnail: "", isFavourite: false))
 }

@@ -11,6 +11,7 @@ class ViewModel: ViewModelProtocol {
     var products: [Int: Product] = [:]
     var categories: [Category] = []
     var isLoading: Bool = true
+    let defaultProduct = Product(id: -1, title: "Default product", description: "default description", category: .beauty, price: -1, thumbnail: "", isFavourite: false)
     
     func fetch() async {
         await fetchAllProducts()
