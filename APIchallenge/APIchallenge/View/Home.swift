@@ -15,7 +15,10 @@ struct Home: View {
     @State var selectedProduct: Product?
     @State var hasAppeared: Bool = false
 
-    let columns = [GridItem(), GridItem()]
+    let columns = [
+        GridItem(.flexible(), spacing: 8),
+        GridItem(.flexible(), spacing: 8)
+    ]
 
     var body: some View {
         ScrollView {
@@ -23,11 +26,19 @@ struct Home: View {
                 Text("Deals of the Day")
                     .font(.title2)
                     .fontWeight(.bold)
-                if let dealOfTheDay = dealOfTheDay {
-                    ProductCard(product: dealOfTheDay)
-                } else {
-                    ProductCard(product: viewModel.defaultProduct)
-                }
+                    if let dealOfTheDay = dealOfTheDay {
+                        Button {
+                            selectedProduct = dealOfTheDay
+                        } label: {
+                            ProductCard(product: dealOfTheDay)
+                        }
+                    } else {
+                        Button {
+                            selectedProduct = viewModel.defaultProduct
+                        } label: {
+                            ProductCard(product: viewModel.defaultProduct)
+                        }
+                    }
             }
 
             VStack(alignment: .leading, spacing: 8) {
@@ -41,7 +52,6 @@ struct Home: View {
                         Button {
                             selectedProduct = product
                         } label: {
-
                             VerticalProductCard(
                                 width: 177,
                                 height: 250,
@@ -51,8 +61,10 @@ struct Home: View {
                     }
                 }
                 .sheet(item: $selectedProduct) { product in
-                    Details(product: product)
-                        .presentationDragIndicator(.visible)
+                    NavigationStack {
+                        Details(product: product)
+                            .presentationDragIndicator(.visible)
+                    }
                 }
             }
             .padding(.top, 8)

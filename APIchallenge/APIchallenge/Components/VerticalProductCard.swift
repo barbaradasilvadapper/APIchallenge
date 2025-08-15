@@ -14,12 +14,16 @@ struct VerticalProductCard: View {
     @State var product: Product
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        
+        VStack(alignment: .leading, spacing: 0) {
             ZStack(alignment: .topTrailing) {
                 AsyncImage(url: URL(string: product.thumbnail)) { image in
                     image.resizable()
+                        .scaledToFit()
                 } placeholder: {
                     Image(.bag)
+                        .resizable()
+                        .scaledToFit()
                 }
                 
                 FavoriteButton(size: .title3, product: $product)
@@ -29,24 +33,34 @@ struct VerticalProductCard: View {
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundStyle(.fillsTertiary)
             )
+
+            
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(product.title)
+                    .font(.subheadline)
+                    .foregroundStyle(.labelsPrimary)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity, minHeight: 34, alignment: .topLeading)
                 
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(product.title)
-                        .font(.subheadline)
-                        .foregroundStyle(.labelsPrimary)
-                    
-                    Text("US$ \(String(format: "%.2f", product.price))")
-                        .font(.headline)
-                        .foregroundStyle(.labelsPrimary)
-                }
-                .padding(8)
+
+                Text("US$ \(String(format: "%.2f", product.price))")
+                    .font(.headline)
+                    .foregroundStyle(.labelsPrimary)
+            }
+            .padding(.top, 8)
+            .padding(.bottom, 8)
         }
         .padding(8)
+        .frame(width: width, height: height)
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.fillsTertiary)
         )
-        .frame(width: width, height: height)
+
+
     }
 }
 
