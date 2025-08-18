@@ -35,7 +35,7 @@ struct TabBar: View {
             }
             
             NavigationStack {
-                Favorites(viewModel: ViewModel(service: Service()))
+                Favorites(viewModel: vm)
             }
             .tabItem {
                 Label("Favorites", systemImage: "heart")

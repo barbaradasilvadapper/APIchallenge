@@ -6,21 +6,46 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct Favorites: View {
     
     var viewModel: ViewModelProtocol
     
+    @Environment(\.modelContext) var modelContext
+    @Query var favoritesList: [FavoritesList]
+    
+    @State var searchText: String = ""
+    
+    var favorites: [Product] {
+        favoritesList.compactMap {
+            viewModel.products[$0.id]
+        }
+    }
+    
+    var searchedProducts: [Product] {
+        if searchText.isEmpty {
+            return favorites
+        }
+
+        return favorites.filter {
+            $0.title.lowercased().contains(searchText.lowercased())
+        }
+    }
+    
     var body: some View {
         VStack {
-            //SEARCH
+            SearchBar(searchText: $searchText)
+            
+            if favorites.isEmpty {
+                EmptyStateFavorites()
+                    .padding(.top, 156)
+            }
+            
             ScrollView {
-                
                 VStack(spacing: 16) {
-                    ForEach(Array(viewModel.products.values), id: \.self) { product in
-                        if product.isFavourite {
-                            ProductListCart(product: product)
-                        }
+                    ForEach(searchedProducts, id: \.id) { product in
+                        ProductListCart(product: product)
                     }
                 }
                 .padding(16)

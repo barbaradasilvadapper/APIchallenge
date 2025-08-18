@@ -6,10 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct Details: View {
     
+    @Environment(\.modelContext) var modelContext
+    @Query var cartList: [CartList]
+    
     @State var product: Product
+    
+    private var isCartInStorage: Bool {
+        cartList.contains(where: { $0.id == product.id })
+    }
     
     var body: some View {
         

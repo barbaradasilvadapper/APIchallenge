@@ -15,6 +15,6 @@ struct APIchallengeApp: App {
         WindowGroup {
             TabBar()
         }
-        .modelContainer(for: Persistence.self)
+        .modelContainer(for: FavoritesList.self)
     }
 }

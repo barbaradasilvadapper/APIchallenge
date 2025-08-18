@@ -36,6 +36,10 @@ struct ProductCard: View {
                     Text(product.title)
                         .font(.subheadline)
                         .foregroundStyle(.labelsPrimary)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, minHeight: 34, alignment: .topLeading)
                     
                     Text("US$ \(String(format: "%.2f", product.price))")
                         .font(.headline)
