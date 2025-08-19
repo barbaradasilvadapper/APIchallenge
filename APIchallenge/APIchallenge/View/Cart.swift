@@ -75,6 +75,10 @@ struct Cart: View {
                     }
                     
                     Button {
+                        cartList.forEach { product in
+                            viewModel.addToOrder(productID: product.id)
+                        }
+                        viewModel.clearCart()
                         
                     } label: {
                         Text("Checkout")

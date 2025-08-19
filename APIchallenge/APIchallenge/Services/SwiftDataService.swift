@@ -15,6 +15,9 @@ class SwiftDataService: LocalServiceProtocol {
     var favoritesList: [FavoritesList] {
         fetchFavorites()
     }
+    var orderList: [OrderList] {
+        fetchOrders()
+    }
     
     private let modelContainer: ModelContainer
     private let modelContext: ModelContext
@@ -37,7 +40,6 @@ class SwiftDataService: LocalServiceProtocol {
             fatalError(error.localizedDescription)
         }
     }
-    
     func removeFromCart(product: Product) {
         do {
             let id = product.id
@@ -48,6 +50,15 @@ class SwiftDataService: LocalServiceProtocol {
                 modelContext.delete(item)
                 try modelContext.save()
             }
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    func clearCart() {
+        do {
+            let items = try modelContext.fetch(FetchDescriptor<CartList>())
+            items.forEach { modelContext.delete($0) }
+            try modelContext.save()
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -76,7 +87,7 @@ class SwiftDataService: LocalServiceProtocol {
             fatalError(error.localizedDescription)
         }
     }
-    
+
     func fetchFavorites() -> [FavoritesList] {
         do {
             return try modelContext.fetch(FetchDescriptor<FavoritesList>())
@@ -84,7 +95,6 @@ class SwiftDataService: LocalServiceProtocol {
             fatalError(error.localizedDescription)
         }
     }
-    
     func fetchCart() -> [CartList] {
         do {
             return try modelContext.fetch(FetchDescriptor<CartList>())
@@ -92,10 +102,19 @@ class SwiftDataService: LocalServiceProtocol {
             fatalError(error.localizedDescription)
         }
     }
-    
     func fetchOrders() -> [OrderList] {
         do {
             return try modelContext.fetch(FetchDescriptor<OrderList>())
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func addToOrder(product: Product) {
+        let product = OrderList(id: product.id)
+        modelContext.insert(product)
+        do {
+            try modelContext.save()
         } catch {
             fatalError(error.localizedDescription)
         }

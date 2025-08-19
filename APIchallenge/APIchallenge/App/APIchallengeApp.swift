@@ -15,6 +15,6 @@ struct APIchallengeApp: App {
         WindowGroup {
             TabBar()
         }
-        .modelContainer(for: [FavoritesList.self, CartList.self])
+        .modelContainer(for: [FavoritesList.self, CartList.self, OrderList.self])
     }
 }

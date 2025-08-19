@@ -4,7 +4,6 @@
 //
 //  Created by Bárbara Dapper on 15/08/25.
 //
-
 import SwiftUI
 import SwiftData
 

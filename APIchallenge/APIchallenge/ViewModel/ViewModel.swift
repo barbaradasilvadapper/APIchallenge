@@ -9,7 +9,6 @@ import SwiftUI
 
 @Observable
 class ViewModel: ViewModelProtocol {
-
     // MARK: API Service
     var products: [Int: Product] = [:]
     var categories: [Category] = []
@@ -24,11 +23,13 @@ class ViewModel: ViewModelProtocol {
     // Just plain vars inside @Observable
     var cartList: [CartList]
     var favoritesList: [FavoritesList]
+    var orderList: [OrderList]
 
     init(service: APIServiceProtocol, dataSource: any LocalServiceProtocol) {
         self.service = service
         self.dataSource = dataSource
         self.cartList = dataSource.fetchCart()
+        self.orderList = dataSource.fetchOrders()
         self.favoritesList = dataSource.fetchFavorites()
     }
 
@@ -53,7 +54,6 @@ class ViewModel: ViewModelProtocol {
         } catch {
             print("Error fetching categories: \(error.localizedDescription)")
         }
-        print(categories)
     }
 
     func addToCart(productID: Int, quantity: Int = 1) {
@@ -79,4 +79,16 @@ class ViewModel: ViewModelProtocol {
         dataSource.removeFromFavorites(product: product)
         favoritesList = dataSource.fetchFavorites()
     }
+    
+    func clearCart() {
+        cartList = []
+        dataSource.clearCart()
+    }
+    
+    func addToOrder(productID: Int) {
+        let product = products[productID] ?? defaultProduct
+        dataSource.addToOrder(product: product)
+        orderList = dataSource.fetchOrders()
+    }
+    
 }

@@ -18,8 +18,14 @@ protocol ViewModelProtocol {
     // Local service
     var cartList: [CartList] { get }
     var favoritesList: [FavoritesList] { get }
+    var orderList: [OrderList] { get }
+    
     func addToCart(productID: Int, quantity: Int)
     func removeFromCart(productID: Int, quantity: Int)
+    func clearCart()
+    
     func addToFavorites(productID: Int)
     func removeFromFavorites(productID: Int)
+    
+    func addToOrder(productID: Int)
 }

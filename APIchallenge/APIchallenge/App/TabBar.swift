@@ -42,7 +42,7 @@ struct TabBar: View {
             }
             
             NavigationStack {
-                
+                Orders(viewModel: vm)
             }
             .tabItem {
                 Label("Orders", systemImage: "bag")
