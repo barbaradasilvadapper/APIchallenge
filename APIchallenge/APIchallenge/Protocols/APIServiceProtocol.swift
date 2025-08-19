@@ -6,7 +6,7 @@
 //
 import Foundation
 
-protocol ServiceProtocol {
+protocol APIServiceProtocol {
     func fetchAllProducts() async throws -> [Int: Product]
     func fetchAllCategories() async throws -> [Category]
 }

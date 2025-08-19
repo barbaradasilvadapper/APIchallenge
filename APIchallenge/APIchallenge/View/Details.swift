@@ -10,8 +10,11 @@ import SwiftData
 
 struct Details: View {
     
-    @Environment(\.modelContext) var modelContext
-    @Query var cartList: [CartList]
+    let viewModel: any ViewModelProtocol
+    
+    var cartList: [CartList] {
+        viewModel.cartList
+    }
     
     @State var product: Product
     @State private var goToCart = false
@@ -33,7 +36,7 @@ struct Details: View {
                             } placeholder: {
                                 Image(.bag)
                             }
-                            FavoriteButton(size: .title, product: $product)
+                            FavoriteButton(viewModel: viewModel, size: .title, product: $product)
                         }
                         .frame(width: 329, height: 329)
                         .frame(maxWidth: .infinity)
@@ -75,9 +78,8 @@ struct Details: View {
                 if let existing = cartList.first(where: { $0.id == product.id }) {
                     existing.quantity += 1
                 } else {
-                    modelContext.insert(CartList(id: product.id, quantity: 1))
+                    viewModel.addToCart(productID: product.id, quantity: 1)
                 }
-                try? modelContext.save()
 
             } label: {
                 Text("Add to cart")

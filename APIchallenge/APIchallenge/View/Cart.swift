@@ -11,8 +11,9 @@ import SwiftUI
 struct Cart: View {
     var viewModel: ViewModelProtocol
     
-    @Environment(\.modelContext) var modelContext
-    @Query var cartList: [CartList]
+    var cartList: [CartList] {
+        viewModel.cartList
+    }
     
     @State var searchText: String = ""
     
@@ -53,7 +54,7 @@ struct Cart: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         ForEach(searchedProducts, id: \.id) { product in
-                            ProductCounter(product: product)
+                            ProductCounter(viewModel: viewModel, product: product)
                         }
                     }
                     .padding(16)
@@ -102,5 +103,5 @@ struct Cart: View {
 }
 
 #Preview {
-    NavigationStack { Cart(viewModel: ViewModel(service: Service())) }
+    NavigationStack { Cart(viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService())) }
 }

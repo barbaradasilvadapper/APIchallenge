@@ -61,5 +61,5 @@ struct Categories: View {
 }
 
 #Preview {
-    Categories(viewModel: ViewModel(service: Service()))
+    Categories(viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService()))
 }

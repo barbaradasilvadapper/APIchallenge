@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProductCard: View {
     
+    var viewModel: ViewModelProtocol
+    
     @State var product: Product
     
     var body: some View {
@@ -29,7 +31,7 @@ struct ProductCard: View {
                         .foregroundStyle(.labelsSecondary)
                     Spacer()
                     
-                    FavoriteButton(size: .title3, product: $product)
+                    FavoriteButton(viewModel: viewModel, size: .title3, product: $product)
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {

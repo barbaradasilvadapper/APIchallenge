@@ -32,13 +32,13 @@ struct Home: View {
                         Button {
                             selectedProduct = dealOfTheDay
                         } label: {
-                            ProductCard(product: dealOfTheDay)
+                            ProductCard(viewModel: viewModel, product: dealOfTheDay)
                         }
                     } else {
                         Button {
                             selectedProduct = viewModel.defaultProduct
                         } label: {
-                            ProductCard(product: viewModel.defaultProduct)
+                            ProductCard(viewModel: viewModel, product: viewModel.defaultProduct)
                         }
                     }
             }
@@ -49,12 +49,13 @@ struct Home: View {
                     .fontWeight(.bold)
 
                 LazyVGrid(columns: columns, spacing: 8) {
-                    ForEach(Array(viewModel.products.values), id: \.self) {
+                    ForEach(Array(viewModel.products.values.sorted(by: { $0.title < $1.title })), id: \.self) {
                         product in
                         Button {
                             selectedProduct = product
                         } label: {
                             VerticalProductCard(
+                                viewModel: viewModel,
                                 width: 177,
                                 height: 250,
                                 product: product
@@ -64,7 +65,7 @@ struct Home: View {
                 }
                 .sheet(item: $selectedProduct) { product in
                     NavigationStack {
-                        Details(product: product)
+                        Details(viewModel: viewModel, product: product)
                             .presentationDragIndicator(.visible)
                     }
                 }
@@ -87,5 +88,5 @@ struct Home: View {
 }
 
 #Preview {
-    NavigationStack { Home(viewModel: ViewModel(service: Service())) }
+    NavigationStack { Home(viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService())) }
 }

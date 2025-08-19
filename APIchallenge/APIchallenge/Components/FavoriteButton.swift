@@ -10,8 +10,11 @@ import SwiftUI
 
 struct FavoriteButton: View {
 
-    @Environment(\.modelContext) var modelContext
-    @Query var favoritesList: [FavoritesList]
+    let viewModel: ViewModelProtocol
+    
+    var favoritesList: [FavoritesList] {
+        viewModel.favoritesList
+    }
 
     var size: Font
     @Binding var product: Product
@@ -24,12 +27,11 @@ struct FavoriteButton: View {
         ZStack {
             Button {
                 if let favoriteToRemove = favoritesList.first(where: { $0.id == product.id }) {
-                    modelContext.delete(favoriteToRemove)
+                    viewModel.removeFromFavorites(productID: product.id)
                 } else {
-                    modelContext.insert(FavoritesList(id: product.id))
+                    viewModel.addToFavorites(productID: product.id)
                 }
 
-                try? modelContext.save()
             } label: {
                 Image(systemName: isFavoriteInStorage ? "heart.fill" : "heart")
                     .font(size)

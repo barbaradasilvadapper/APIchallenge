@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProductListCart: View {
     
+    let viewModel: any ViewModelProtocol
+    
     @State var product: Product
     @State var selectedProduct: Product?
     
@@ -55,7 +57,7 @@ struct ProductListCart: View {
                 }
                 .sheet(item: $selectedProduct) { product in
                     NavigationStack {
-                        Details(product: product)
+                        Details(viewModel: viewModel, product: product)
                             .presentationDragIndicator(.visible)
                     }
                 }

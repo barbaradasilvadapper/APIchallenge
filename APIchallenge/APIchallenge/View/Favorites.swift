@@ -11,9 +11,10 @@ import SwiftData
 struct Favorites: View {
     
     var viewModel: ViewModelProtocol
-    
-    @Environment(\.modelContext) var modelContext
-    @Query var favoritesList: [FavoritesList]
+
+    var favoritesList: [FavoritesList] {
+        viewModel.favoritesList
+    }
     
     @State var searchText: String = ""
     
@@ -45,7 +46,7 @@ struct Favorites: View {
             ScrollView {
                 VStack(spacing: 16) {
                     ForEach(searchedProducts, id: \.id) { product in
-                        ProductListCart(product: product)
+                        ProductListCart(viewModel: viewModel, product: product)
                     }
                 }
                 .padding(16)
@@ -61,5 +62,6 @@ struct Favorites: View {
 }
 
 #Preview {
-    NavigationStack { Favorites(viewModel: ViewModel(service: Service())) }
+    NavigationStack { Favorites(viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService()))
+    }
 }

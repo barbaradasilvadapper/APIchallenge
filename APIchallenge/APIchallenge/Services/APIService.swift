@@ -6,7 +6,7 @@
 //
 import Foundation
 
-class Service: ServiceProtocol {
+class APIService: APIServiceProtocol {
     
     private let baseURL: String = "https://dummyjson.com"
     

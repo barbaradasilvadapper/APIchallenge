@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct VerticalProductCard: View {
+    
+    var viewModel: any ViewModelProtocol
+    
     var width: CGFloat
     var height: CGFloat
     
@@ -26,7 +29,7 @@ struct VerticalProductCard: View {
                         .scaledToFit()
                 }
                 
-                FavoriteButton(size: .title3, product: $product)
+                FavoriteButton(viewModel: viewModel, size: .title3, product: $product)
             }
             .frame(width: 160, height: 160)
             .background(

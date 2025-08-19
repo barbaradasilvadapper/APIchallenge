@@ -10,8 +10,11 @@ import SwiftUI
 
 struct ProductCounter: View {
     
-    @Environment(\.modelContext) var modelContext
-    @Query var cartList: [CartList]
+    var viewModel: any ViewModelProtocol
+    
+    var cartList: [CartList] {
+        viewModel.cartList
+    }
     
     @State var product: Product
     
@@ -57,15 +60,11 @@ struct ProductCounter: View {
                         
                         if let existing = cartList.first(where: { $0.id == product.id }) {
                             existing.quantity -= 1
-                            if existing.quantity == 0 {
-                                modelContext.delete(existing)
+                            if existing.quantity <= 0 {
+                                viewModel.removeFromCart(productID: product.id, quantity: quantity)
                             }
                         }
                         
-//                        if let item = productInCart, item.quantity > 1 {
-//                            item.quantity -= 1
-//                        }
-                        try? modelContext.save()
                     } label: {
                         Image(systemName: "minus")
                             .foregroundStyle(.labelsPrimary)
@@ -82,23 +81,18 @@ struct ProductCounter: View {
                         .foregroundStyle(.labelsPrimary)
                     
                     Button {
-                        if let item = productInCart {
+                        if let _ = productInCart {
                             
                             if let existing = cartList.first(where: { $0.id == product.id }) {
                                 if existing.quantity == 9 { return }
                                 existing.quantity += 1
                             } else {
-                                modelContext.insert(CartList(id: product.id, quantity: 1))
+                                viewModel.removeFromCart(productID: product.id, quantity: quantity)
                             }
                             
-//                            if item.quantity < 9 {
-//                                item.quantity += 1
-//                            }
                         } else {
-                            // ainda não existe no carrinho → cria
-                            modelContext.insert(CartList(id: product.id, quantity: 1))
+                            viewModel.addToCart(productID: product.id, quantity: quantity)
                         }
-                        try? modelContext.save()
                     } label: {
                         Image(systemName: "plus")
                             .foregroundStyle(.labelsPrimary)
@@ -121,9 +115,4 @@ struct ProductCounter: View {
                 .foregroundStyle(.fillsTertiary)
         )
     }
-}
-
-
-#Preview {
-    ProductCounter(product: .init(id: 2, title: "Product name with two or more lines goes here", description: "nothing", category: Category.beauty, price: 0, thumbnail: "", isFavourite: false))
 }
