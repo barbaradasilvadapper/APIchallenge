@@ -6,10 +6,22 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct Details: View {
     
+    let viewModel: any ViewModelProtocol
+    
+    var cartList: [CartList] {
+        viewModel.cartList
+    }
+    
     @State var product: Product
+    @State private var goToCart = false
+    
+    private var isCartInStorage: Bool {
+        cartList.contains(where: { $0.id == product.id })
+    }
     
     var body: some View {
         
@@ -24,7 +36,7 @@ struct Details: View {
                             } placeholder: {
                                 Image(.bag)
                             }
-                            FavoriteButton(size: .title, product: $product)
+                            FavoriteButton(viewModel: viewModel, size: .title, product: $product)
                         }
                         .frame(width: 329, height: 329)
                         .frame(maxWidth: .infinity)
@@ -63,7 +75,12 @@ struct Details: View {
                 .padding(.top, 16)
             }
             Button {
-                
+                if let existing = cartList.first(where: { $0.id == product.id }) {
+                    existing.quantity += 1
+                } else {
+                    viewModel.addToCart(productID: product.id, quantity: 1)
+                }
+
             } label: {
                 Text("Add to cart")
                     .font(.body)
@@ -77,6 +94,7 @@ struct Details: View {
                     )
             }
             .padding(16)
+
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
@@ -85,6 +103,7 @@ struct Details: View {
         .toolbarBackground(.backgroundsTertiary, for: .navigationBar)
     }
 }
+
 
 //#Preview {
 //    Details()

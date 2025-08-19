@@ -54,6 +54,7 @@ struct CategoryFilter: View {
                             selectedProduct = product
                         } label: {
                             VerticalProductCard(
+                                viewModel: viewModel,
                                 width: 177,
                                 height: 250,
                                 product: product
@@ -63,7 +64,7 @@ struct CategoryFilter: View {
                 }
                 .sheet(item: $selectedProduct) { product in
                     NavigationStack {
-                        Details(product: product)
+                        Details(viewModel: viewModel, product: product)
                             .presentationDragIndicator(.visible)
                     }
                 }
@@ -79,7 +80,7 @@ struct CategoryFilter: View {
     NavigationStack {
         CategoryFilter(
             category: .beauty,
-            viewModel: ViewModel(service: Service())
+            viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService())
         )
     }
 }

@@ -55,9 +55,11 @@ struct Categories: View {
             Spacer()
         }
         .navigationTitle("Categories")
+        .toolbarBackgroundVisibility(.visible, for: .tabBar)
+        .toolbarBackground(.backgroundsTertiary, for: .tabBar)
     }
 }
 
 #Preview {
-    Categories(viewModel: ViewModel(service: Service()))
+    Categories(viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService()))
 }

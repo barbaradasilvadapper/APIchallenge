@@ -5,22 +5,36 @@
 //  Created by Bárbara Dapper on 13/08/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct FavoriteButton: View {
+
+    let viewModel: ViewModelProtocol
     
+    var favoritesList: [FavoritesList] {
+        viewModel.favoritesList
+    }
+
     var size: Font
-    
     @Binding var product: Product
-    
+
+    private var isFavoriteInStorage: Bool {
+        favoritesList.contains(where: { $0.id == product.id })
+    }
+
     var body: some View {
         ZStack {
             Button {
-                product.isFavourite.toggle()
+                if let favoriteToRemove = favoritesList.first(where: { $0.id == product.id }) {
+                    viewModel.removeFromFavorites(productID: product.id)
+                } else {
+                    viewModel.addToFavorites(productID: product.id)
+                }
+
             } label: {
-                Image(systemName: product.isFavourite ? "heart.fill" : "heart")
+                Image(systemName: isFavoriteInStorage ? "heart.fill" : "heart")
                     .font(size)
-//                    .frame(width: size.rawValue, height: size.rawValue)
                     .foregroundStyle(.labelsPrimary)
             }
         }
@@ -28,7 +42,6 @@ struct FavoriteButton: View {
         .background(
             RoundedRectangle(cornerRadius: 8)
                 .foregroundStyle(.fillsTertiary)
-                //.frame(width: 38, height: 38)
         )
     }
 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProductCard: View {
     
+    var viewModel: ViewModelProtocol
+    
     @State var product: Product
     
     var body: some View {
@@ -29,13 +31,17 @@ struct ProductCard: View {
                         .foregroundStyle(.labelsSecondary)
                     Spacer()
                     
-                    FavoriteButton(size: .title3, product: $product)
+                    FavoriteButton(viewModel: viewModel, size: .title3, product: $product)
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(product.title)
                         .font(.subheadline)
                         .foregroundStyle(.labelsPrimary)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, minHeight: 34, alignment: .topLeading)
                     
                     Text("US$ \(String(format: "%.2f", product.price))")
                         .font(.headline)
