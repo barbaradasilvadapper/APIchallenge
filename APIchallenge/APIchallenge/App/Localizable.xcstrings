@@ -1,6 +1,46 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@, %@ dollars" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@ dollars"
+          }
+        }
+      }
+    },
+    "%@, %@ dollars, %lld in cart" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@ dollars, %3$lld in cart"
+          }
+        }
+      }
+    },
+    "%@, %@ dollars, product description: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@ dollars, product description: %3$@"
+          }
+        }
+      }
+    },
+    "%@, %@, %@ dollars" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@, %3$@ dollars"
+          }
+        }
+      }
+    },
     "%lld" : {
       "shouldTranslate" : false
     },
@@ -23,6 +63,9 @@
           }
         }
       }
+    },
+    "Add to favorites" : {
+
     },
     "Beauty" : {
       "localizations" : {
@@ -74,6 +117,21 @@
         }
       }
     },
+    "Click on the button to add the product to the cart" : {
+
+    },
+    "Click on the cart icon to see more details" : {
+
+    },
+    "Click on the quantity buttons to adjust the quantity in cart." : {
+
+    },
+    "Click to see more details" : {
+
+    },
+    "Click to toggle favorite status" : {
+
+    },
     "Deals of the Day" : {
       "localizations" : {
         "pt-BR" : {
@@ -90,6 +148,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Entrega"
+          }
+        }
+      }
+    },
+    "Deliver by %@,%@, %@ dollars" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Deliver by %1$@,%2$@, %3$@ dollars"
           }
         }
       }
@@ -276,6 +344,9 @@
           }
         }
       }
+    },
+    "Remove from favorites" : {
+
     },
     "Skincare" : {
       "shouldTranslate" : false

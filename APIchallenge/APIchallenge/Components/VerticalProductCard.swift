@@ -62,7 +62,9 @@ struct VerticalProductCard: View {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.fillsTertiary)
         )
-
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(product.title), \(String(format: "%.2f", product.price)) dollars")
+        .accessibilityHint("Click to see more details")
 
     }
 }
