@@ -1,0 +1,117 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@" : {
+
+    },
+    "%lld" : {
+      "shouldTranslate" : false
+    },
+    "Add an item to your cart." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicione um item em seu carrinho"
+          }
+        }
+      }
+    },
+    "Add to cart" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar ao Carrinho"
+          }
+        }
+      }
+    },
+    "Buy an item and it will show up here." : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compre um item e ele aparecerá aqui."
+          }
+        }
+      }
+    },
+    "Cart" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carrinho"
+          }
+        }
+      }
+    },
+    "Categories" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categorias"
+          }
+        }
+      }
+    },
+    "Checkout" : {
+
+    },
+    "Deals of the Day" : {
+
+    },
+    "Deliver by " : {
+
+    },
+    "Details" : {
+
+    },
+    "Failed to load categories" : {
+
+    },
+    "Favorite an item and it will show up here." : {
+
+    },
+    "Favorites" : {
+
+    },
+    "Hello, World!" : {
+
+    },
+    "Home" : {
+
+    },
+    "No favorites yet!" : {
+
+    },
+    "No orders yet!" : {
+
+    },
+    "Orders" : {
+
+    },
+    "Top picks" : {
+
+    },
+    "Total" : {
+      "shouldTranslate" : false
+    },
+    "US$ %@" : {
+
+    },
+    "Your cart is empty!" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seu carrinho está vazio!"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
