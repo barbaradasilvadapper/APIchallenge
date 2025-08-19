@@ -70,7 +70,7 @@ struct Cart: View {
                         
                         Spacer()
                         
-                        Text("\(total, format: .currency(code: "USD"))")
+                        Text("US$ \(String(format: "%.2f", total))")
                             .font(.headline)
                     }
                     

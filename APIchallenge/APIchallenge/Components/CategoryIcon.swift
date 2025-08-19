@@ -23,7 +23,7 @@ struct CategoryIcon: View {
             .background(.backgroundsSecondary)
             .cornerRadius(16)
             
-            Text(category.rawValue.capitalized)
+            Text(category.stringLocalized.capitalized)
                 .font(.subheadline)
                 .frame(width: 84)
                 .lineLimit(1)

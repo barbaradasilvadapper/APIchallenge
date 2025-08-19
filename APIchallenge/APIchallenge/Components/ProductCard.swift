@@ -26,7 +26,7 @@ struct ProductCard: View {
             
             VStack(alignment: .leading, spacing: 24) {
                 HStack(spacing: 4){
-                    Text(product.category.rawValue.uppercased())
+                    Text(product.category.stringLocalized.uppercased())
                         .font(.footnote)
                         .foregroundStyle(.labelsSecondary)
                     Spacer()
