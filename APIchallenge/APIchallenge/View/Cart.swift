@@ -16,6 +16,12 @@ struct Cart: View {
     
     @State var searchText: String = ""
     
+    var total: Double {
+        cart.reduce(0) { result, product in
+            result + Double(product.price) * Double(cartList.filter { $0.id == product.id }.first!.quantity)
+        }
+    }
+    
     var cart: [Product] {
         cartList.compactMap {
             viewModel.products[$0.id]
@@ -39,25 +45,59 @@ struct Cart: View {
             if cart.isEmpty {
                 EmptyStateCart()
                     .padding(.top, 156)
-            }
-            
-            ScrollView {
+                
+                Spacer()
+            } else {
+                
+                
+                ScrollView {
+                    VStack(spacing: 16) {
+                        ForEach(searchedProducts, id: \.id) { product in
+                            ProductCounter(product: product)
+                        }
+                    }
+                    .padding(16)
+                }
+                
+                Spacer()
+                
                 VStack(spacing: 16) {
-                    ForEach(searchedProducts, id: \.id) { product in
-                        ProductCounter(product: product)
+                    
+                    HStack {
+                        Text("Total")
+                            .font(.subheadline)
+                        
+                        Spacer()
+                        
+                        Text("\(total, format: .currency(code: "USD"))")
+                            .font(.headline)
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        Text("Checkout")
+                            .font(.body)
+                            .fontWeight(.bold)
+                            .foregroundStyle(.labelsPrimary)
+                            .padding(.vertical, 16)
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .foregroundStyle(.fillsTertiary)
+                            )
                     }
                 }
                 .padding(16)
+                
             }
-            
-            Spacer()
-            
-            
         }
         .task {
             await viewModel.fetch()
         }
         .navigationTitle("Cart")
+        .toolbarBackgroundVisibility(.visible, for: .tabBar)
+        .toolbarBackground(.backgroundsTertiary, for: .tabBar)
     }
 }
 

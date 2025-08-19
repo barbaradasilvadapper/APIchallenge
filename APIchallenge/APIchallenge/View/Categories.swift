@@ -55,6 +55,8 @@ struct Categories: View {
             Spacer()
         }
         .navigationTitle("Categories")
+        .toolbarBackgroundVisibility(.visible, for: .tabBar)
+        .toolbarBackground(.backgroundsTertiary, for: .tabBar)
     }
 }
 

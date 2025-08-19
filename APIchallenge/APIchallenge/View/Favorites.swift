@@ -55,6 +55,8 @@ struct Favorites: View {
             await viewModel.fetch()
         }
         .navigationTitle("Favorites")
+        .toolbarBackgroundVisibility(.visible, for: .tabBar)
+        .toolbarBackground(.backgroundsTertiary, for: .tabBar)
     }
 }
 
