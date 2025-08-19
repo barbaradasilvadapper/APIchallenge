@@ -54,9 +54,17 @@ struct ProductCounter: View {
                 
                 HStack(spacing: 6) {
                     Button {
-                        if let item = productInCart, item.quantity > 1 {
-                            item.quantity -= 1
+                        
+                        if let existing = cartList.first(where: { $0.id == product.id }) {
+                            existing.quantity -= 1
+                            if existing.quantity == 0 {
+                                modelContext.delete(existing)
+                            }
                         }
+                        
+//                        if let item = productInCart, item.quantity > 1 {
+//                            item.quantity -= 1
+//                        }
                         try? modelContext.save()
                     } label: {
                         Image(systemName: "minus")
@@ -75,9 +83,17 @@ struct ProductCounter: View {
                     
                     Button {
                         if let item = productInCart {
-                            if item.quantity < 9 {
-                                item.quantity += 1
+                            
+                            if let existing = cartList.first(where: { $0.id == product.id }) {
+                                if existing.quantity == 9 { return }
+                                existing.quantity += 1
+                            } else {
+                                modelContext.insert(CartList(id: product.id, quantity: 1))
                             }
+                            
+//                            if item.quantity < 9 {
+//                                item.quantity += 1
+//                            }
                         } else {
                             // ainda não existe no carrinho → cria
                             modelContext.insert(CartList(id: product.id, quantity: 1))

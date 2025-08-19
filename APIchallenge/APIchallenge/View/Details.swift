@@ -72,7 +72,11 @@ struct Details: View {
                 .padding(.top, 16)
             }
             Button {
-                modelContext.insert(CartList(id: product.id, quantity: 1))
+                if let existing = cartList.first(where: { $0.id == product.id }) {
+                    existing.quantity += 1
+                } else {
+                    modelContext.insert(CartList(id: product.id, quantity: 1))
+                }
                 try? modelContext.save()
 
             } label: {
