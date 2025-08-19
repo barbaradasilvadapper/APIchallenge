@@ -14,6 +14,7 @@ struct Details: View {
     @Query var cartList: [CartList]
     
     @State var product: Product
+    @State private var goToCart = false
     
     private var isCartInStorage: Bool {
         cartList.contains(where: { $0.id == product.id })
@@ -71,7 +72,9 @@ struct Details: View {
                 .padding(.top, 16)
             }
             Button {
-                
+                modelContext.insert(CartList(id: product.id, quantity: 1))
+                try? modelContext.save()
+
             } label: {
                 Text("Add to cart")
                     .font(.body)
@@ -85,6 +88,7 @@ struct Details: View {
                     )
             }
             .padding(16)
+
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
@@ -93,6 +97,7 @@ struct Details: View {
         .toolbarBackground(.backgroundsTertiary, for: .navigationBar)
     }
 }
+
 
 //#Preview {
 //    Details()

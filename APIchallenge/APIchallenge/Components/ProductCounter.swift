@@ -5,11 +5,23 @@
 //  Created by Bárbara Dapper on 18/08/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ProductCounter: View {
+    
+    @Environment(\.modelContext) var modelContext
+    @Query var cartList: [CartList]
+    
     @State var product: Product
-    @State private var quantity: Int = 1
+    
+    private var productInCart: CartList? {
+        cartList.first(where: { $0.id == product.id })
+    }
+    
+    private var quantity: Int {
+        productInCart?.quantity ?? 0
+    }
     
     var body: some View {
         HStack(alignment: .center) {
@@ -42,9 +54,10 @@ struct ProductCounter: View {
                 
                 HStack(spacing: 6) {
                     Button {
-                        if quantity > 1 {
-                            quantity -= 1
+                        if let item = productInCart, item.quantity > 1 {
+                            item.quantity -= 1
                         }
+                        try? modelContext.save()
                     } label: {
                         Image(systemName: "minus")
                             .foregroundStyle(.labelsPrimary)
@@ -61,7 +74,15 @@ struct ProductCounter: View {
                         .foregroundStyle(.labelsPrimary)
                     
                     Button {
-                        quantity += 1
+                        if let item = productInCart {
+                            if item.quantity < 9 {
+                                item.quantity += 1
+                            }
+                        } else {
+                            // ainda não existe no carrinho → cria
+                            modelContext.insert(CartList(id: product.id, quantity: 1))
+                        }
+                        try? modelContext.save()
                     } label: {
                         Image(systemName: "plus")
                             .foregroundStyle(.labelsPrimary)

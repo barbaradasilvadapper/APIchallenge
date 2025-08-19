@@ -28,7 +28,7 @@ struct TabBar: View {
             }
             
             NavigationStack {
-                
+                Cart(viewModel: vm)
             }
             .tabItem {
                 Label("Cart", systemImage: "cart")
