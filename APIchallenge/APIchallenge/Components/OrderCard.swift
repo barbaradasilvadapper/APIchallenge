@@ -12,14 +12,14 @@ struct OrderCard: View {
     @State var selectedProduct: Product?
     
     var body: some View {
-        HStack(alignment: .center, spacing: 8) {
+        HStack(spacing: 8) {
             AsyncImage(url: URL(string: product.thumbnail)) { image in
                 image.resizable()
             } placeholder: {
                 Image(.bag)
                     .resizable()
             }
-            .frame(width: 78, height: 78)
+            .frame(width: 80, height: 80)
             .background(.fillsQuaternary)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .padding(8)
@@ -49,9 +49,9 @@ struct OrderCard: View {
                     .foregroundStyle(.labelsPrimary)
             }
             .padding(.trailing, 16)
-            
+            Spacer()
         }
-        .frame(width: 361, height: 94)
+        .frame(width: 361, height: 96)
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.fillsTertiary)
@@ -60,5 +60,5 @@ struct OrderCard: View {
 }
 
 #Preview {
-    OrderCard(product: .init(id: 2, title: "Product name with two or more lines goes here", description: "nothing", category: Category.beauty, price: 0, thumbnail: "", isFavourite: false))
+    OrderCard(product: .init(id: 2, title: "Product name ", description: "nothing", category: Category.beauty, price: 0, thumbnail: "", isFavourite: false))
 }

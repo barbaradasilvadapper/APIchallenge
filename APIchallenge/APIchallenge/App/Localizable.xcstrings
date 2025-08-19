@@ -159,18 +159,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alimentoa"
-          }
-        }
-      }
-    },
-    "Hello, World!" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oi, Mundo!"
+            "value" : "Alimentos"
           }
         }
       }
@@ -283,7 +272,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Compras"
+            "value" : "Pedidos"
           }
         }
       }
