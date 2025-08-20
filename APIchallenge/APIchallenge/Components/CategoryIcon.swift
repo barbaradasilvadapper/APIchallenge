@@ -29,6 +29,9 @@ struct CategoryIcon: View {
                 .lineLimit(1)
                 .truncationMode(.tail)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(category.stringLocalized)")
+
         
     }
 }

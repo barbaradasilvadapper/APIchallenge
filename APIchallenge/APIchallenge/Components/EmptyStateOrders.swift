@@ -26,6 +26,8 @@ struct EmptyStateOrders: View {
                     .foregroundStyle(.labelsSecondary)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("No orders yet! Buy an item and it will show up here.")
     }
 }
 
