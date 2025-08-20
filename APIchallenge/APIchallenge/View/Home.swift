@@ -88,5 +88,5 @@ struct Home: View {
 }
 
 #Preview {
-    NavigationStack { Home(viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService())) }
+    NavigationStack { Home(viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService())) }
 }

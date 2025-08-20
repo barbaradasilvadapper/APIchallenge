@@ -107,5 +107,5 @@ struct Cart: View {
 }
 
 #Preview {
-    NavigationStack { Cart(viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService())) }
+    NavigationStack { Cart(viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService())) }
 }

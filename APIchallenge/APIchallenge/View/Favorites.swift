@@ -61,6 +61,6 @@ struct Favorites: View {
 }
 
 #Preview {
-    NavigationStack { Favorites(viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService()))
+    NavigationStack { Favorites(viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService()))
     }
 }

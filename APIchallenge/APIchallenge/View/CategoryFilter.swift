@@ -80,7 +80,7 @@ struct CategoryFilter: View {
     NavigationStack {
         CategoryFilter(
             category: .beauty,
-            viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService())
+            viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService())
         )
     }
 }
