@@ -11,7 +11,7 @@ class APIService: APIServiceProtocol {
     private let baseURL: String = "https://dummyjson.com"
     
     func fetchAllProducts() async throws -> [Int: Product] {
-        let urlString = "\(baseURL)/products"
+        let urlString = "\(baseURL)/products?limit=0"
         
         guard let url = URL(string: urlString) else {
             throw URLError(.badURL)
@@ -31,10 +31,8 @@ class APIService: APIServiceProtocol {
         }
         
         let (data, _) = try await URLSession.shared.data(from: url)
-        // DummyJSON returns an array of strings (category slugs), not an object with a "categories" key
         let slugs = try JSONDecoder().decode([String].self, from: data)
-        // Only keep the categories we know how to display
-        return slugs.compactMap(Category.init(rawValue:))
+        return slugs.compactMap(Category.init(fromRawValue:))
     }
     
     

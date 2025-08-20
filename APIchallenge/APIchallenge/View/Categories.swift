@@ -23,7 +23,7 @@ struct Categories: View {
             return viewModel.categories
         } else {
             return viewModel.categories.filter {
-                $0.rawValue.lowercased().contains(searchText.lowercased())
+                $0.stringValue.lowercased().contains(searchText.lowercased())
             }
         }
     }
