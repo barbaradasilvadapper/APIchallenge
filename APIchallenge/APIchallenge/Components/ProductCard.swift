@@ -32,6 +32,8 @@ struct ProductCard: View {
                     Spacer()
                     
                     FavoriteButton(viewModel: viewModel, size: .title3, product: $product)
+                        .accessibilityLabel(product.isFavourite ? "Remove from favorites" : "Add to favorites")
+                        .accessibilityHint("Click to toggle favorite status")
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -55,7 +57,7 @@ struct ProductCard: View {
                 .foregroundStyle(.fillsTertiary)
         )
         
-        .accessibilityElement(children: .ignore)
+        .accessibilityElement(children: .contain)
         .accessibilityLabel("\(product.category.stringLocalized), \(product.title), \(String(format: "%.2f", product.price)) dollars")
         .accessibilityHint("Click to see more details")
     }

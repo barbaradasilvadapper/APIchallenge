@@ -30,6 +30,8 @@ struct VerticalProductCard: View {
                 }
                 
                 FavoriteButton(viewModel: viewModel, size: .title3, product: $product)
+                    .accessibilityLabel(product.isFavourite ? "Remove from favorites" : "Add to favorites")
+                    .accessibilityHint("Click to toggle favorite status")
             }
             .frame(width: 160, height: 160)
             .background(
@@ -62,7 +64,7 @@ struct VerticalProductCard: View {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.fillsTertiary)
         )
-        .accessibilityElement(children: .ignore)
+        .accessibilityElement(children: .contain)
         .accessibilityLabel("\(product.title), \(String(format: "%.2f", product.price)) dollars")
         .accessibilityHint("Click to see more details")
 

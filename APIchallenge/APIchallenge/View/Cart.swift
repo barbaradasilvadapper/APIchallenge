@@ -100,9 +100,7 @@ struct Cart: View {
         .task {
             await viewModel.fetch()
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("your total is \(total)")
-        .accessibilityHint("Click on the button to checkout")
+        .accessibilityElement(children: .contain)
         .navigationTitle("Cart")
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)

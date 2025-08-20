@@ -26,6 +26,8 @@ struct EmptyStateFavorites: View {
                     .foregroundStyle(.labelsSecondary)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("No favorites yet! Favorite an item and it will show up here.")
     }
 }
 
