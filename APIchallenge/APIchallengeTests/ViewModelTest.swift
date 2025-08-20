@@ -18,7 +18,7 @@ struct ViewModelTest {
         // Given
         let service = MockProductService(shouldFail: false)
         let viewModel = ViewModel(
-            service: service,
+            APIservice: service,
             dataSource: MockLocalService()
         )
 
@@ -34,7 +34,7 @@ struct ViewModelTest {
         // Given
         let service = MockProductService(shouldFail: true)
         let viewModel = ViewModel(
-            service: service,
+            APIservice: service,
             dataSource: MockLocalService()
         )
 
@@ -50,7 +50,7 @@ struct ViewModelTest {
         // Given
         let service = MockProductService(shouldFail: false)
         let viewModel = ViewModel(
-            service: service,
+            APIservice: service,
             dataSource: MockLocalService()
         )
 
@@ -66,7 +66,7 @@ struct ViewModelTest {
         // Given
         let service = MockProductService(shouldFail: true)
         let viewModel = ViewModel(
-            service: service,
+            APIservice: service,
             dataSource: MockLocalService()
         )
 
@@ -83,7 +83,7 @@ struct ViewModelTest {
         // Given
         let service = MockProductService(shouldFail: false)
         let viewModel = ViewModel(
-            service: service,
+            APIservice: service,
             dataSource: MockLocalService()
         )
         let product = Product(
@@ -107,7 +107,7 @@ struct ViewModelTest {
         // Given
         let service = MockProductService(shouldFail: false)
         let viewModel = ViewModel(
-            service: service,
+            APIservice: service,
             dataSource: MockLocalService()
         )
         let product = Product(
@@ -126,13 +126,13 @@ struct ViewModelTest {
         viewModel.removeFromCart(productID: product.id, quantity: 2)
         
         // Then
-        #expect(viewModel.dataSource.fetchCart().count == 0)
+        #expect(viewModel.cartList.count == 0)
     }
     @Test func clearCart() {
         // Given
         let service = MockProductService(shouldFail: false)
         let viewModel = ViewModel(
-            service: service,
+            APIservice: service,
             dataSource: MockLocalService()
         )
         let product = Product(
@@ -151,14 +151,14 @@ struct ViewModelTest {
         viewModel.clearCart()
         
         // Then
-        #expect(viewModel.dataSource.fetchCart().count == 0)
+        #expect(viewModel.cartList.count == 0)
     }
     
     @Test func addToFavorites() {
         // Given
         let service = MockProductService(shouldFail: false)
         let viewModel = ViewModel(
-            service: service,
+            APIservice: service,
             dataSource: MockLocalService()
         )
         let product = Product(
@@ -181,7 +181,7 @@ struct ViewModelTest {
         // Given
         let service = MockProductService(shouldFail: false)
         let viewModel = ViewModel(
-            service: service,
+            APIservice: service,
             dataSource: MockLocalService()
         )
         let product = Product(
@@ -207,7 +207,7 @@ struct ViewModelTest {
         // Given
         let service = MockProductService(shouldFail: false)
         let viewModel = ViewModel(
-            service: service,
+            APIservice: service,
             dataSource: MockLocalService()
         )
         let product = Product(

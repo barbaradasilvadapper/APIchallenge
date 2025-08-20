@@ -9,24 +9,9 @@ import SwiftUI
 
 @Observable
 class ViewModel: ViewModelProtocol {
-    // MARK: API Service
-    var products: [Int: Product] = [:]
-    var categories: [Category] = []
-    var isLoading: Bool = true
-    let defaultProduct = Product(id: -1, title: "Default product", description: "default description", category: .beauty, price: -1, thumbnail: "", isFavourite: false)
 
-    private let service: APIServiceProtocol
-
-    // MARK: - Local Service
-    private let dataSource: any LocalServiceProtocol
-
-    // Just plain vars inside @Observable
-    var cartList: [CartList]
-    var favoritesList: [FavoritesList]
-    var orderList: [OrderList]
-
-    init(service: APIServiceProtocol, dataSource: any LocalServiceProtocol) {
-        self.service = service
+    init(APIservice: APIServiceProtocol, dataSource: any LocalServiceProtocol) {
+        self.service = APIservice
         self.dataSource = dataSource
         self.cartList = dataSource.fetchCart()
         self.orderList = dataSource.fetchOrders()
