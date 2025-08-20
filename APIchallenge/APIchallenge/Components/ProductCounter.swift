@@ -114,5 +114,8 @@ struct ProductCounter: View {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.fillsTertiary)
         )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(product.title), \(String(format: "%.2f", product.price)) dollars, \(quantity) in cart")
+        .accessibilityHint("Click on the quantity buttons to adjust the quantity in cart.")
     }
 }

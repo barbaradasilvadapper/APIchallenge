@@ -43,6 +43,9 @@ struct FavoriteButton: View {
             RoundedRectangle(cornerRadius: 8)
                 .foregroundStyle(.fillsTertiary)
         )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(isFavoriteInStorage ? "Remove from favorites" : "Add to favorites")
+        .accessibilityHint("Click to toggle favorite status")
     }
 }
 

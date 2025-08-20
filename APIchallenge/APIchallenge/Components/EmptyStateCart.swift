@@ -26,6 +26,8 @@ struct EmptyStateCart: View {
                     .foregroundStyle(.labelsSecondary)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Your cart is empty! Add an item to your cart.")
     }
 
 }

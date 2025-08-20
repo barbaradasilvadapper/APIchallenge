@@ -71,7 +71,7 @@ struct CategoryFilter: View {
             }
             .padding(.horizontal, 16)
         }
-        .navigationTitle(category.stringValue.capitalized)
+        .navigationTitle(category.stringLocalized.capitalized)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

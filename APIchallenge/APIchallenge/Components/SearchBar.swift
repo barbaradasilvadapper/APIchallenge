@@ -26,5 +26,9 @@ struct SearchBar: View {
             .padding(.horizontal)
         }
         .padding(.horizontal)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Search bar")
+        .accessibilityHint("Type to search items")
+
     }
 }
