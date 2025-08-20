@@ -18,7 +18,7 @@ class ViewModel: ViewModelProtocol {
     private let service: APIServiceProtocol
 
     // MARK: - Local Service
-    private let dataSource: any LocalServiceProtocol
+    let dataSource: any LocalServiceProtocol
 
     // Just plain vars inside @Observable
     var cartList: [CartList]
