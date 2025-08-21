@@ -27,7 +27,7 @@ class SwiftDataService: LocalServiceProtocol {
     
     @MainActor
     init() {
-        self.modelContainer = try! ModelContainer(for: FavoritesList.self, CartList.self, OrderList.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
+        self.modelContainer = try! ModelContainer(for: FavoritesList.self, CartList.self, OrderList.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
         self.modelContext = modelContainer.mainContext
     }
     

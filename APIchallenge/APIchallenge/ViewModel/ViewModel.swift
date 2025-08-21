@@ -9,7 +9,6 @@ import SwiftUI
 
 @Observable
 class ViewModel: ViewModelProtocol {
-
     init(APIservice: APIServiceProtocol, dataSource: any LocalServiceProtocol) {
         self.service = APIservice
         self.dataSource = dataSource
@@ -57,9 +56,9 @@ class ViewModel: ViewModelProtocol {
     var favoritesList: [FavoritesList]
     var orderList: [OrderList]
 
-    func addToCart(productID: Int, quantity: Int = 1) {
+    func addToCart(productID: Int) {
         let product = products[productID] ?? defaultProduct
-        dataSource.addToCart(product: product, quantity: quantity)
+        dataSource.addToCart(product: product, quantity: 1)
         cartList = dataSource.fetchCart()
     }
 

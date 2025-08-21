@@ -91,7 +91,7 @@ struct ProductCounter: View {
                             }
                             
                         } else {
-                            viewModel.addToCart(productID: product.id, quantity: quantity)
+                            viewModel.addToCart(productID: product.id)
                         }
                     } label: {
                         Image(systemName: "plus")

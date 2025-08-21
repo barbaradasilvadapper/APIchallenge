@@ -15,17 +15,18 @@ protocol ViewModelProtocol {
     var defaultProduct: Product { get }
     func fetch() async
     
-    // Local service
+    // Cart Service
     var cartList: [CartList] { get }
-    var favoritesList: [FavoritesList] { get }
-    var orderList: [OrderList] { get }
-    
-    func addToCart(productID: Int, quantity: Int)
+    func addToCart(productID: Int)
     func removeFromCart(productID: Int, quantity: Int)
     func clearCart()
-    
+
+    // Favorites Service
+    var favoritesList: [FavoritesList] { get }
     func addToFavorites(productID: Int)
     func removeFromFavorites(productID: Int)
     
+    // Orders Service
+    var orderList: [OrderList] { get }
     func addToOrder(productID: Int)
 }

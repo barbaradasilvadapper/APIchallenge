@@ -78,7 +78,7 @@ struct Details: View {
                 if let existing = cartList.first(where: { $0.id == product.id }) {
                     existing.quantity += 1
                 } else {
-                    viewModel.addToCart(productID: product.id, quantity: 1)
+                    viewModel.addToCart(productID: product.id,)
                 }
 
             } label: {
