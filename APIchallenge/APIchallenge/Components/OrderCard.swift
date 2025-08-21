@@ -56,6 +56,8 @@ struct OrderCard: View {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.fillsTertiary)
         )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Deliver by \(Date.now, format: Date.FormatStyle()),\(product.title), \(String(format: "%.2f", product.price)) dollars")
     }
 }
 

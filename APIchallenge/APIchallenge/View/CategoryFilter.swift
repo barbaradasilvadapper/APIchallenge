@@ -71,7 +71,7 @@ struct CategoryFilter: View {
             }
             .padding(.horizontal, 16)
         }
-        .navigationTitle(category.stringValue.capitalized)
+        .navigationTitle(category.stringLocalized.capitalized)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -80,7 +80,7 @@ struct CategoryFilter: View {
     NavigationStack {
         CategoryFilter(
             category: .beauty,
-            viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService())
+            viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService())
         )
     }
 }

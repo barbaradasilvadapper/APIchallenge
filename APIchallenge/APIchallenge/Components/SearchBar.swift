@@ -15,9 +15,9 @@ struct SearchBar: View {
     var body: some View {
         ZStack {
             Color.fillsTertiary
-                .frame(width: 361, height: 36)
+                .frame(height: 36)
                 .cornerRadius(10)
-
+            
             HStack {
                 Image(systemName: "magnifyingglass")
                 
@@ -26,5 +26,9 @@ struct SearchBar: View {
             .padding(.horizontal)
         }
         .padding(.horizontal)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Search bar")
+        .accessibilityHint("Type to search items")
+
     }
 }

@@ -97,9 +97,7 @@ struct Cart: View {
                 
             }
         }
-        .task {
-            await viewModel.fetch()
-        }
+        .accessibilityElement(children: .contain)
         .navigationTitle("Cart")
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
@@ -107,5 +105,5 @@ struct Cart: View {
 }
 
 #Preview {
-    NavigationStack { Cart(viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService())) }
+    NavigationStack { Cart(viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService())) }
 }

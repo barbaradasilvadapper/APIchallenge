@@ -11,6 +11,8 @@ struct ProductCard: View {
     
     var viewModel: ViewModelProtocol
     
+    var height: CGFloat
+    
     @State var product: Product
     
     var body: some View {
@@ -20,7 +22,7 @@ struct ProductCard: View {
             } placeholder: {
                 Image(.bag)
             }
-            .frame(width: 160, height: 160)
+            .frame(width: height, height: height)
             .background(.fillsQuaternary)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
@@ -32,6 +34,8 @@ struct ProductCard: View {
                     Spacer()
                     
                     FavoriteButton(viewModel: viewModel, size: .title3, product: $product)
+                        .accessibilityLabel(product.isFavourite ? "Remove from favorites" : "Add to favorites")
+                        .accessibilityHint("Click to toggle favorite status")
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -54,6 +58,10 @@ struct ProductCard: View {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.fillsTertiary)
         )
+        
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("\(product.category.stringLocalized), \(product.title), \(String(format: "%.2f", product.price)) dollars")
+        .accessibilityHint("Click to see more details")
     }
 }
 

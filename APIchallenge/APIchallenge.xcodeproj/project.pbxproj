@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		3131673C2E565021006BC00A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3131632C2E4D16B8006BC00A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 313163332E4D16B8006BC00A;
+			remoteInfo = APIchallenge;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		313163342E4D16B8006BC00A /* APIchallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APIchallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		313167382E565021006BC00A /* APIchallengeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APIchallengeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = APIchallenge;
 			sourceTree = "<group>";
 		};
+		313167392E565021006BC00A /* APIchallengeTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = APIchallengeTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		313163312E4D16B8006BC00A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		313167352E565021006BC00A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				313163362E4D16B8006BC00A /* APIchallenge */,
+				313167392E565021006BC00A /* APIchallengeTests */,
 				313163352E4D16B8006BC00A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				313163342E4D16B8006BC00A /* APIchallenge.app */,
+				313167382E565021006BC00A /* APIchallengeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = 313163342E4D16B8006BC00A /* APIchallenge.app */;
 			productType = "com.apple.product-type.application";
 		};
+		313167372E565021006BC00A /* APIchallengeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 313167402E565021006BC00A /* Build configuration list for PBXNativeTarget "APIchallengeTests" */;
+			buildPhases = (
+				313167342E565021006BC00A /* Sources */,
+				313167352E565021006BC00A /* Frameworks */,
+				313167362E565021006BC00A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3131673D2E565021006BC00A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				313167392E565021006BC00A /* APIchallengeTests */,
+			);
+			name = APIchallengeTests;
+			packageProductDependencies = (
+			);
+			productName = APIchallengeTests;
+			productReference = 313167382E565021006BC00A /* APIchallengeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -82,6 +130,10 @@
 				TargetAttributes = {
 					313163332E4D16B8006BC00A = {
 						CreatedOnToolsVersion = 16.3;
+					};
+					313167372E565021006BC00A = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 313163332E4D16B8006BC00A;
 					};
 				};
 			};
@@ -101,12 +153,20 @@
 			projectRoot = "";
 			targets = (
 				313163332E4D16B8006BC00A /* APIchallenge */,
+				313167372E565021006BC00A /* APIchallengeTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		313163322E4D16B8006BC00A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		313167362E565021006BC00A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -123,7 +183,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		313167342E565021006BC00A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3131673D2E565021006BC00A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 313163332E4D16B8006BC00A /* APIchallenge */;
+			targetProxy = 3131673C2E565021006BC00A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3131633F2E4D16B8006BC00A /* Debug */ = {
@@ -303,6 +378,42 @@
 			};
 			name = Release;
 		};
+		3131673E2E565021006BC00A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 92RP42WR9X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = acadmey.APIchallengeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/APIchallenge.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/APIchallenge";
+			};
+			name = Debug;
+		};
+		3131673F2E565021006BC00A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 92RP42WR9X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = acadmey.APIchallengeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/APIchallenge.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/APIchallenge";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -320,6 +431,15 @@
 			buildConfigurations = (
 				313163422E4D16B8006BC00A /* Debug */,
 				313163432E4D16B8006BC00A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		313167402E565021006BC00A /* Build configuration list for PBXNativeTarget "APIchallengeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3131673E2E565021006BC00A /* Debug */,
+				3131673F2E565021006BC00A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

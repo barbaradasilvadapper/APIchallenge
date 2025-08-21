@@ -51,9 +51,6 @@ struct Favorites: View {
                 .padding(16)
             }
         }
-        .task {
-            await viewModel.fetch()
-        }
         .navigationTitle("Favorites")
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
@@ -61,6 +58,6 @@ struct Favorites: View {
 }
 
 #Preview {
-    NavigationStack { Favorites(viewModel: ViewModel(service: APIService(), dataSource: SwiftDataService()))
+    NavigationStack { Favorites(viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService()))
     }
 }

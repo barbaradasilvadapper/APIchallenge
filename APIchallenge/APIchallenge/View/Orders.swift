@@ -51,9 +51,6 @@ struct Orders: View {
                 .padding(16)
             }
         }
-        .task {
-            await viewModel.fetch()
-        }
         .navigationTitle("Orders")
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)

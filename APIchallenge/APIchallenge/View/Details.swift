@@ -96,6 +96,9 @@ struct Details: View {
             .padding(16)
 
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(product.title), \(String(format: "%.2f", product.price)) dollars, product description: \(product.description)")
+        .accessibilityHint("Click on the button to add the product to the cart")
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.visible, for: .navigationBar)

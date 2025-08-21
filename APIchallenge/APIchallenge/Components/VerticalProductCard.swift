@@ -18,7 +18,7 @@ struct VerticalProductCard: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
             ZStack(alignment: .topTrailing) {
                 AsyncImage(url: URL(string: product.thumbnail)) { image in
                     image.resizable()
@@ -30,14 +30,15 @@ struct VerticalProductCard: View {
                 }
                 
                 FavoriteButton(viewModel: viewModel, size: .title3, product: $product)
+                    .accessibilityLabel(product.isFavourite ? "Remove from favorites" : "Add to favorites")
+                    .accessibilityHint("Click to toggle favorite status")
             }
-            .frame(width: 160, height: 160)
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundStyle(.fillsTertiary)
             )
 
-            
+            Spacer()
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(product.title)
@@ -53,8 +54,9 @@ struct VerticalProductCard: View {
                     .font(.headline)
                     .foregroundStyle(.labelsPrimary)
             }
-            .padding(.top, 8)
-            .padding(.bottom, 8)
+            .padding(.horizontal, 8)
+            
+            Spacer()
         }
         .padding(8)
         .frame(width: width, height: height)
@@ -62,7 +64,9 @@ struct VerticalProductCard: View {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.fillsTertiary)
         )
-
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("\(product.title), \(String(format: "%.2f", product.price)) dollars")
+        .accessibilityHint("Click to see more details")
 
     }
 }
