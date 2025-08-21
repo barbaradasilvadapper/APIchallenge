@@ -9,16 +9,16 @@ import SwiftUI
 
 @Observable
 class ViewModel: ViewModelProtocol {
-    init(APIservice: APIServiceProtocol, dataSource: any LocalServiceProtocol) {
-        self.service = APIservice
+    init(APIservice: any APIServiceProtocol, dataSource: any LocalServiceProtocol, favoritesService: any FavoritesServiceProtocol, cartService: any CartServiceProtocol) {
+        self.productService = APIservice
+        self.favoritesService = favoritesService
+        self.cartService = cartService
         self.dataSource = dataSource
-        self.cartList = dataSource.fetchCart()
         self.orderList = dataSource.fetchOrders()
-        self.favoritesList = dataSource.fetchFavorites()
     }
     
     // MARK: - API Service
-    private let service: any APIServiceProtocol
+    internal let productService: any APIServiceProtocol
 
     var products: [Int: Product] = [:]
     var categories: [Category] = []
@@ -35,7 +35,7 @@ class ViewModel: ViewModelProtocol {
 
     func fetchAllProducts() async {
         do {
-            products = try await service.fetchAllProducts()
+            products = try await productService.fetchAllProducts()
         } catch {
             print("Error fetching products: \(error.localizedDescription)")
         }
@@ -43,52 +43,70 @@ class ViewModel: ViewModelProtocol {
 
     func fetchCategories() async {
         do {
-            categories = try await service.fetchAllCategories()
+            categories = try await productService.fetchAllCategories()
         } catch {
             print("Error fetching categories: \(error.localizedDescription)")
         }
     }
 
-    // MARK: - Local Service
-    private let dataSource: any LocalServiceProtocol
-
-    var cartList: [CartList]
-    var favoritesList: [FavoritesList]
-    var orderList: [OrderList]
-
-    func addToCart(productID: Int) {
-        let product = products[productID] ?? defaultProduct
-        dataSource.addToCart(product: product, quantity: 1)
-        cartList = dataSource.fetchCart()
-    }
-
-    func removeFromCart(productID: Int, quantity: Int) {
-        let product = products[productID] ?? defaultProduct
-        dataSource.removeFromCart(product: product)
-        cartList = dataSource.fetchCart()
+    // MARK: - Favorites Service
+    internal var favoritesService: any FavoritesServiceProtocol
+    
+    var favoritesList: [FavoritesList] {
+        favoritesService.favoritesList
     }
 
     func addToFavorites(productID: Int) {
-        let product = products[productID] ?? defaultProduct
-        dataSource.addToFavorites(product: product)
-        favoritesList = dataSource.fetchFavorites()
+        if favoritesList.filter({ $0.id == productID }).count > 0 {
+            removeFromFavorites(productID: productID)
+            return
+        }
+        
+        favoritesService.addToFavorites(productID: productID)
+    }
+    
+    func removeFromFavorites(productID: Int) {
+        favoritesService.removeFromFavorites(productID: productID)
     }
 
-    func removeFromFavorites(productID: Int) {
-        let product = products[productID] ?? defaultProduct
-        dataSource.removeFromFavorites(product: product)
-        favoritesList = dataSource.fetchFavorites()
+    // MARK: - Cart Service
+    internal let cartService: any CartServiceProtocol
+    
+    var cartList: [CartList] {
+        cartService.cartList
+    }
+    
+    func addToCart(productID: Int) {
+        cartService.addToCart(productID: productID)
+    }
+
+    func removeFromCart(productID: Int, quantity: Int) {
+        cartService.removeFromCart(productID: productID, quantity: quantity)
     }
     
     func clearCart() {
-        cartList = []
-        dataSource.clearCart()
+        cartService.clearCart()
     }
+    
+    var productCount: [(Product, Int)] {
+        var ans: [(Product, Int)] = []
+        cartList.forEach {
+            ans.append((products[$0.id] ?? defaultProduct, $0.quantity))
+        }
+        return ans
+    }
+    
+    
+    // MARK: -
+    private let dataSource: any LocalServiceProtocol
+
+    var orderList: [OrderList]
+
+    
     
     func addToOrder(productID: Int) {
         let product = products[productID] ?? defaultProduct
         dataSource.addToOrder(product: product)
         orderList = dataSource.fetchOrders()
     }
-    
 }

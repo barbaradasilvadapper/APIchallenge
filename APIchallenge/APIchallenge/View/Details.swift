@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct Details: View {
+    @Environment(\.dismiss) private var dismiss
     
     let viewModel: any ViewModelProtocol
     
@@ -36,7 +37,7 @@ struct Details: View {
                             } placeholder: {
                                 Image(.bag)
                             }
-                            FavoriteButton(viewModel: viewModel, size: .title, product: $product)
+                            FavoriteButton(onClick: { viewModel.addToFavorites(productID: product.id) }, size: .title, product: $product)
                         }
                         .frame(width: 329, height: 329)
                         .frame(maxWidth: .infinity)
@@ -80,7 +81,7 @@ struct Details: View {
                 } else {
                     viewModel.addToCart(productID: product.id,)
                 }
-
+                dismiss()
             } label: {
                 Text("Add to cart")
                     .font(.body)

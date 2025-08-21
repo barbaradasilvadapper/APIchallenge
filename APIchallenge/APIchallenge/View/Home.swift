@@ -76,7 +76,7 @@ struct Home: View {
                                     selectedProduct = product
                                 } label: {
                                     ProductCard(
-                                        viewModel: viewModel,
+                                        onClick: { viewModel.addToFavorites(productID: product.id) },
                                         height: 255,
                                         product: product
                                     )
@@ -108,7 +108,7 @@ struct Home: View {
                                     selectedProduct = product
                                 } label: {
                                     VerticalProductCard(
-                                        viewModel: viewModel,
+                                        onClick: { viewModel.addToFavorites(productID: product.id) },
                                         width: 214,
                                         height: 302,
                                         product: product
@@ -136,7 +136,7 @@ struct Home: View {
                                     selectedProduct = product
                                 } label: {
                                     ProductCard(
-                                        viewModel: viewModel,
+                                        onClick: { viewModel.addToFavorites(productID: product.id) },
                                         height: 167,
                                         product: product
                                     )
@@ -163,7 +163,7 @@ struct Home: View {
                                     selectedProduct = product
                                 } label: {
                                     VerticalProductCard(
-                                        viewModel: viewModel,
+                                        onClick: { viewModel.addToFavorites(productID: product.id) },
                                         width: 181,
                                         height: 256,
                                         product: product
@@ -192,7 +192,7 @@ struct Home: View {
                                         selectedProduct = product
                                     } label: {
                                         VerticalProductCard(
-                                            viewModel: viewModel,
+                                            onClick: { viewModel.addToFavorites(productID: product.id) },
                                             width: 181,
                                             height: 256,
                                             product: product
@@ -221,7 +221,7 @@ struct Home: View {
                         Button {
                             selectedProduct = deal
                         } label: {
-                            ProductCard(viewModel: viewModel, height: 160, product: deal)
+                            ProductCard(onClick: { viewModel.addToFavorites(productID: deal.id) }, height: 160, product: deal)
                         }
                         .sheet(item: $selectedProduct) { product in
                             NavigationStack {
@@ -246,7 +246,7 @@ struct Home: View {
                                 selectedProduct = product
                             } label: {
                                 VerticalProductCard(
-                                    viewModel: viewModel,
+                                    onClick: { viewModel.addToFavorites(productID: product.id) },
                                     width: 177,
                                     height: 250,
                                     product: product
@@ -278,13 +278,13 @@ struct Home: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        Home(
-            viewModel: ViewModel(
-                APIservice: APIService(),
-                dataSource: SwiftDataService()
-            )
-        )
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        Home(
+//            viewModel: ViewModel(
+//                APIservice: APIService(),
+//                dataSource: SwiftDataService()
+//            )
+//        )
+//    }
+//}

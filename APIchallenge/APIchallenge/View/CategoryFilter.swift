@@ -54,7 +54,7 @@ struct CategoryFilter: View {
                             selectedProduct = product
                         } label: {
                             VerticalProductCard(
-                                viewModel: viewModel,
+                                onClick: { viewModel.addToFavorites(productID: product.id) },
                                 width: 177,
                                 height: 250,
                                 product: product
@@ -76,11 +76,11 @@ struct CategoryFilter: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        CategoryFilter(
-            category: .beauty,
-            viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService())
-        )
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        CategoryFilter(
+//            category: .beauty,
+//            viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService())
+//        )
+//    }
+//}

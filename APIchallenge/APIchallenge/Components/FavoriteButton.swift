@@ -9,31 +9,18 @@ import SwiftData
 import SwiftUI
 
 struct FavoriteButton: View {
-
-    let viewModel: ViewModelProtocol
     
-    var favoritesList: [FavoritesList] {
-        viewModel.favoritesList
-    }
+    let onClick: () -> Void
 
     var size: Font
     @Binding var product: Product
 
-    private var isFavoriteInStorage: Bool {
-        favoritesList.contains(where: { $0.id == product.id })
-    }
-
     var body: some View {
         ZStack {
             Button {
-                if let _ = favoritesList.first(where: { $0.id == product.id }) {
-                    viewModel.removeFromFavorites(productID: product.id)
-                } else {
-                    viewModel.addToFavorites(productID: product.id)
-                }
-
+                action()
             } label: {
-                Image(systemName: isFavoriteInStorage ? "heart.fill" : "heart")
+                Image(systemName: product.isFavourite ? "heart.fill" : "heart")
                     .font(size)
                     .foregroundStyle(.labelsPrimary)
             }
@@ -44,8 +31,13 @@ struct FavoriteButton: View {
                 .foregroundStyle(.fillsTertiary)
         )
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(isFavoriteInStorage ? "Remove from favorites" : "Add to favorites")
+        .accessibilityLabel(product.isFavourite ? "Remove from favorites" : "Add to favorites")
         .accessibilityHint("Click to toggle favorite status")
+    }
+    
+    func action() {
+        onClick()
+        product.isFavourite.toggle()
     }
 }
 

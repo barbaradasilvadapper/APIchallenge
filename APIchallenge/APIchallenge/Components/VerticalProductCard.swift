@@ -9,7 +9,7 @@ import SwiftUI
 
 struct VerticalProductCard: View {
     
-    var viewModel: any ViewModelProtocol
+    let onClick: () -> Void
     
     var width: CGFloat
     var height: CGFloat
@@ -29,7 +29,7 @@ struct VerticalProductCard: View {
                         .scaledToFit()
                 }
                 
-                FavoriteButton(viewModel: viewModel, size: .title3, product: $product)
+                FavoriteButton(onClick: onClick, size: .title3, product: $product)
                     .accessibilityLabel(product.isFavourite ? "Remove from favorites" : "Add to favorites")
                     .accessibilityHint("Click to toggle favorite status")
             }

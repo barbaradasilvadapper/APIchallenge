@@ -6,9 +6,11 @@
 //
 import Foundation
 
+@MainActor
 protocol CartServiceProtocol {
     var cartList: [CartList] { get }
     func addToCart(productID: Int)
     func removeFromCart(productID: Int, quantity: Int)
     func clearCart()
+    func fetchCart() -> [CartList]
 }

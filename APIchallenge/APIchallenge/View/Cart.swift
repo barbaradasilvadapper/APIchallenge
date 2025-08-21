@@ -11,9 +11,7 @@ import SwiftUI
 struct Cart: View {
     var viewModel: ViewModelProtocol
     
-    var cartList: [CartList] {
-        viewModel.cartList
-    }
+    @State var cartList: [CartList] = []
     
     @State var searchText: String = ""
     
@@ -54,7 +52,23 @@ struct Cart: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         ForEach(searchedProducts, id: \.id) { product in
-                            ProductCounter(viewModel: viewModel, product: product)
+                            ProductCounter(add: {
+                                let qtd = cartList.filter { $0.id == product.id }.first!.quantity
+                                if qtd < 9{
+                                    cartList.filter { $0.id == product.id }.first!.quantity += 1
+                                }
+                            },
+                                           remove: {
+                                let qtd = cartList.filter { $0.id == product.id }.first!.quantity
+                                if qtd > 1{
+                                    cartList.filter { $0.id == product.id }.first!.quantity -= 1
+                                } else {
+                                    viewModel.removeFromCart(productID: product.id, quantity: qtd)
+                                }
+                            },
+                                           product: product,
+                                           quantity: cartList.filter { $0.id == product.id }.first!.quantity
+                            )
                         }
                     }
                     .padding(16)
@@ -101,9 +115,12 @@ struct Cart: View {
         .navigationTitle("Cart")
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
+        .onAppear {
+            cartList = viewModel.cartList
+        }
     }
 }
 
-#Preview {
-    NavigationStack { Cart(viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService())) }
-}
+//#Preview {
+//    NavigationStack { Cart(viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService())) }
+//}

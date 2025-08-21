@@ -6,8 +6,10 @@
 //
 import Foundation
 
+@MainActor
 protocol FavoritesServiceProtocol {
     var favoritesList: [FavoritesList] { get }
     func addToFavorites(productID: Int)
     func removeFromFavorites(productID: Int)
+    func fetchFavorites() -> [FavoritesList]
 }

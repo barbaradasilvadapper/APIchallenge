@@ -11,9 +11,7 @@ struct Favorites: View {
     
     var viewModel: ViewModelProtocol
 
-    var favoritesList: [FavoritesList] {
-        viewModel.favoritesList
-    }
+    @State var favoritesList: [FavoritesList] = []
     
     @State var searchText: String = ""
     
@@ -54,10 +52,13 @@ struct Favorites: View {
         .navigationTitle("Favorites")
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
+        .onAppear {
+            favoritesList = viewModel.favoritesList
+        }
     }
 }
 
-#Preview {
-    NavigationStack { Favorites(viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService()))
-    }
-}
+//#Preview {
+//    NavigationStack { Favorites(viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService()))
+//    }
+//}

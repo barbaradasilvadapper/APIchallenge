@@ -10,21 +10,12 @@ import SwiftUI
 
 struct ProductCounter: View {
     
-    var viewModel: any ViewModelProtocol
-    
-    var cartList: [CartList] {
-        viewModel.cartList
-    }
+    var add: () -> Void
+    var remove: () -> Void
     
     @State var product: Product
-    
-    private var productInCart: CartList? {
-        cartList.first(where: { $0.id == product.id })
-    }
-    
-    private var quantity: Int {
-        productInCart?.quantity ?? 0
-    }
+
+    var quantity: Int
     
     var body: some View {
         HStack(alignment: .center) {
@@ -57,14 +48,7 @@ struct ProductCounter: View {
                 
                 HStack(spacing: 6) {
                     Button {
-                        
-                        if let existing = cartList.first(where: { $0.id == product.id }) {
-                            existing.quantity -= 1
-                            if existing.quantity <= 0 {
-                                viewModel.removeFromCart(productID: product.id, quantity: quantity)
-                            }
-                        }
-                        
+                        remove()
                     } label: {
                         Image(systemName: "minus")
                             .foregroundStyle(.labelsPrimary)
@@ -81,18 +65,7 @@ struct ProductCounter: View {
                         .foregroundStyle(.labelsPrimary)
                     
                     Button {
-                        if let _ = productInCart {
-                            
-                            if let existing = cartList.first(where: { $0.id == product.id }) {
-                                if existing.quantity == 9 { return }
-                                existing.quantity += 1
-                            } else {
-                                viewModel.removeFromCart(productID: product.id, quantity: quantity)
-                            }
-                            
-                        } else {
-                            viewModel.addToCart(productID: product.id)
-                        }
+                        add()
                     } label: {
                         Image(systemName: "plus")
                             .foregroundStyle(.labelsPrimary)
