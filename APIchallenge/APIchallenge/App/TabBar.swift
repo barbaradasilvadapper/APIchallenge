@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TabBar: View {
     
-    let vm: ViewModelProtocol = ViewModel(APIservice: APIService(), dataSource: SwiftDataService(), favoritesService: FavoritesService(), cartService: CartService())
+    let vm: ViewModelProtocol = ViewModel(APIservice: APIService(), favoritesService: FavoritesService(), cartService: CartService(), ordersService: OrdersService())
     
     var body: some View {
         TabView {

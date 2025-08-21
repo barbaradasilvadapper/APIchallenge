@@ -32,6 +32,7 @@ protocol ViewModelProtocol {
     func removeFromFavorites(productID: Int)
     
     // Orders Service
+    var ordersService: any OrdersServiceProtocol { get }
     var orderList: [OrderList] { get }
     func addToOrder(productID: Int)
 }

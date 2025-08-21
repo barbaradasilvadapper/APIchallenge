@@ -11,9 +11,7 @@ struct Orders: View {
     
     var viewModel: ViewModelProtocol
 
-    var orderList: [OrderList] {
-        viewModel.orderList
-    }
+    @State var orderList: [OrderList] = []
     
     @State var searchText: String = ""
     
@@ -54,6 +52,9 @@ struct Orders: View {
         .navigationTitle("Orders")
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
+        .onAppear {
+            orderList = viewModel.orderList
+        }
     }
 }
 

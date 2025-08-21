@@ -6,7 +6,9 @@
 //
 import Foundation
 
+@MainActor
 protocol OrdersServiceProtocol {
     var oredersList: [OrderList] { get }
     func addToOrder(productID: Int)
+    func fetchOrders() -> [OrderList]
 }

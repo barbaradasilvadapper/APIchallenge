@@ -11,6 +11,8 @@ import SwiftUI
 struct Cart: View {
     var viewModel: ViewModelProtocol
     
+    @State var refreshID = UUID()
+    
     @State var cartList: [CartList] = []
     
     @State var searchText: String = ""
@@ -64,6 +66,7 @@ struct Cart: View {
                                     cartList.filter { $0.id == product.id }.first!.quantity -= 1
                                 } else {
                                     viewModel.removeFromCart(productID: product.id, quantity: qtd)
+                                    refreshID = UUID()
                                 }
                             },
                                            product: product,
@@ -93,7 +96,7 @@ struct Cart: View {
                             viewModel.addToOrder(productID: product.id)
                         }
                         viewModel.clearCart()
-                        
+                        refreshID = UUID()
                     } label: {
                         Text("Checkout")
                             .font(.body)
@@ -118,6 +121,7 @@ struct Cart: View {
         .onAppear {
             cartList = viewModel.cartList
         }
+        .id(refreshID)
     }
 }
 

@@ -9,12 +9,11 @@ import SwiftUI
 
 @Observable
 class ViewModel: ViewModelProtocol {
-    init(APIservice: any APIServiceProtocol, dataSource: any LocalServiceProtocol, favoritesService: any FavoritesServiceProtocol, cartService: any CartServiceProtocol) {
+    init(APIservice: any APIServiceProtocol, favoritesService: any FavoritesServiceProtocol, cartService: any CartServiceProtocol, ordersService: any OrdersServiceProtocol) {
         self.productService = APIservice
         self.favoritesService = favoritesService
         self.cartService = cartService
-        self.dataSource = dataSource
-        self.orderList = dataSource.fetchOrders()
+        self.ordersService = ordersService
     }
     
     // MARK: - API Service
@@ -97,16 +96,14 @@ class ViewModel: ViewModelProtocol {
     }
     
     
-    // MARK: -
-    private let dataSource: any LocalServiceProtocol
+    // MARK: - Orders Service
+    internal var ordersService: any OrdersServiceProtocol
 
-    var orderList: [OrderList]
+    var orderList: [OrderList] {
+        ordersService.fetchOrders()
+    }
 
-    
-    
     func addToOrder(productID: Int) {
-        let product = products[productID] ?? defaultProduct
-        dataSource.addToOrder(product: product)
-        orderList = dataSource.fetchOrders()
+        ordersService.addToOrder(productID: productID)
     }
 }
