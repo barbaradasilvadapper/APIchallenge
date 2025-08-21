@@ -17,7 +17,7 @@ struct SearchBar: View {
             Color.fillsTertiary
                 .frame(height: 36)
                 .cornerRadius(10)
-
+            
             HStack {
                 Image(systemName: "magnifyingglass")
                 

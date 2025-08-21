@@ -13,47 +13,170 @@ struct Home: View {
     var dealOfTheDay: Product? {
         viewModel.products.values.first
     }
-    
+
     @State var selectedProduct: Product?
     @State var hasAppeared: Bool = false
 
     let columns = [
         GridItem(.flexible(), spacing: 8),
-        GridItem(.flexible(), spacing: 8)
+        GridItem(.flexible(), spacing: 8),
     ]
+
+    /* iPad vars */
+    var iPadDealsOfTheDay: [Product]? {
+        Array(viewModel.products.values.prefix(2))
+    }
+
+    let iPadDealsOfTheDayColumns = [
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16),
+    ]
+
+    let iPadColumns = [
+        GridItem(.flexible(), spacing: 0),
+        GridItem(.flexible(), spacing: 0),
+        GridItem(.flexible(), spacing: 0),
+        GridItem(.flexible(), spacing: 0),
+    ]
+
+    let iPadHorizontalColumns = [
+        GridItem(.flexible(), spacing: 0),
+        GridItem(.flexible(), spacing: 0),
+        GridItem(.flexible(), spacing: 0),
+        GridItem(.flexible(), spacing: 0),
+        GridItem(.flexible(), spacing: 0)
+    ]
+
+    var iPadTopPicks: [Product] {
+        Array(
+            viewModel.products.values.sorted { $0.title < $1.title }.prefix(4)
+        )
+    }
+
+    var iPadBestSellers: [Product]? {
+        Array(
+            viewModel.products.values.sorted { $0.title > $1.title }.dropFirst(
+                4
+            )
+        )
+    }
+    /***/
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Deals of the Day")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    if let dealOfTheDay = dealOfTheDay {
-                        Button {
-                            selectedProduct = dealOfTheDay
-                        } label: {
-                            ProductCard(viewModel: viewModel, product: dealOfTheDay)
-                        }
-                    } else {
-                        Button {
-                            selectedProduct = viewModel.defaultProduct
-                        } label: {
-                            ProductCard(viewModel: viewModel, product: viewModel.defaultProduct)
+            ViewThatFits {
+
+                // Horizontal iPad
+                VStack(alignment: .leading, spacing: 16) {
+                    if let deals = iPadDealsOfTheDay {
+                        LazyVGrid(columns: iPadDealsOfTheDayColumns, spacing: 0)
+                        {
+                            ForEach(deals) { product in
+                                ProductCard(
+                                    viewModel: viewModel,
+                                    product: product
+                                )
+                            }
                         }
                     }
-            }
 
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Top picks")
-                    .font(.title2)
-                    .fontWeight(.bold)
+                    VStack(alignment: .leading) {
+                        Text("Top picks")
+                            .font(.title2).fontWeight(.bold)
 
-                LazyVGrid(columns: columns, spacing: 8) {
-                    ForEach(Array(viewModel.products.values.sorted(by: { $0.title < $1.title })), id: \.self) {
-                        product in
-                        Button {
-                            selectedProduct = product
-                        } label: {
+                        LazyVGrid(columns: iPadHorizontalColumns, spacing: 16) {
+                            ForEach(
+                                Array(
+                                    viewModel.products.values.sorted {
+                                        $0.title < $1.title
+                                    }
+                                ),
+                                id: \.self
+                            ) { product in
+                                VerticalProductCard(
+                                    viewModel: viewModel,
+                                    width: 214,
+                                    height: 302,
+                                    product: product
+                                )
+                            }
+                        }
+
+                    }
+                }
+
+                // Wide (iPad) layout
+                VStack(alignment: .leading, spacing: 16) {
+                    if let deals = iPadDealsOfTheDay {
+                        LazyVGrid(columns: iPadDealsOfTheDayColumns, spacing: 0)
+                        {
+                            ForEach(deals) { product in
+                                ProductCard(
+                                    viewModel: viewModel,
+                                    product: product
+                                )
+                            }
+                        }
+                    }
+
+                    VStack(alignment: .leading) {
+                        Text("Top picks")
+                            .font(.title2).fontWeight(.bold)
+                        LazyVGrid(columns: iPadColumns, spacing: 16) {
+                            ForEach(
+                                iPadTopPicks,
+                                id: \.self
+                            ) { product in
+                                VerticalProductCard(
+                                    viewModel: viewModel,
+                                    width: 181,
+                                    height: 256,
+                                    product: product
+                                )
+                            }
+                        }
+                    }
+
+                    VStack(alignment: .leading) {
+                        Text("Best Sellers")
+                            .font(.title2).fontWeight(.bold)
+                        if let bestSellers = iPadBestSellers {
+                            LazyVGrid(columns: iPadColumns, spacing: 16) {
+                                ForEach(
+                                    bestSellers,
+                                    id: \.self
+                                ) { product in
+                                    VerticalProductCard(
+                                        viewModel: viewModel,
+                                        width: 181,
+                                        height: 256,
+                                        product: product
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Fallback (iPhone vertical stack)
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Deals of the Day")
+                        .font(.title2).fontWeight(.bold)
+                    if let deal = dealOfTheDay {
+                        ProductCard(viewModel: viewModel, product: deal)
+                    }
+
+                    Text("Top picks")
+                        .font(.title2).fontWeight(.bold)
+                    LazyVGrid(columns: columns, spacing: 8) {
+                        ForEach(
+                            Array(
+                                viewModel.products.values.sorted(by: {
+                                    $0.title < $1.title
+                                })
+                            ),
+                            id: \.self
+                        ) { product in
                             VerticalProductCard(
                                 viewModel: viewModel,
                                 width: 177,
@@ -63,21 +186,14 @@ struct Home: View {
                         }
                     }
                 }
-                .sheet(item: $selectedProduct) { product in
-                    NavigationStack {
-                        Details(viewModel: viewModel, product: product)
-                            .presentationDragIndicator(.visible)
-                    }
-                }
             }
-            .padding(.top, 8)
 
         }
         .padding(16)
         .onAppear {
             if !hasAppeared {
                 hasAppeared = true
-                
+
                 Task {
                     await viewModel.fetch()
                 }
@@ -88,5 +204,12 @@ struct Home: View {
 }
 
 #Preview {
-    NavigationStack { Home(viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService())) }
+    NavigationStack {
+        Home(
+            viewModel: ViewModel(
+                APIservice: APIService(),
+                dataSource: SwiftDataService()
+            )
+        )
+    }
 }
