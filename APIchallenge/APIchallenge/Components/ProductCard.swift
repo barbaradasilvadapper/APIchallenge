@@ -11,6 +11,8 @@ struct ProductCard: View {
     
     var viewModel: ViewModelProtocol
     
+    var height: CGFloat
+    
     @State var product: Product
     
     var body: some View {
@@ -20,7 +22,7 @@ struct ProductCard: View {
             } placeholder: {
                 Image(.bag)
             }
-            .frame(width: 160, height: 160)
+            .frame(width: height, height: height)
             .background(.fillsQuaternary)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             

@@ -44,7 +44,7 @@ struct Home: View {
         GridItem(.flexible(), spacing: 0),
         GridItem(.flexible(), spacing: 0),
         GridItem(.flexible(), spacing: 0),
-        GridItem(.flexible(), spacing: 0)
+        GridItem(.flexible(), spacing: 0),
     ]
 
     var iPadTopPicks: [Product] {
@@ -72,10 +72,21 @@ struct Home: View {
                         LazyVGrid(columns: iPadDealsOfTheDayColumns, spacing: 0)
                         {
                             ForEach(deals) { product in
-                                ProductCard(
-                                    viewModel: viewModel,
-                                    product: product
-                                )
+                                Button {
+                                    selectedProduct = product
+                                } label: {
+                                    ProductCard(
+                                        viewModel: viewModel,
+                                        height: 255,
+                                        product: product
+                                    )
+                                }
+                            }
+                        }
+                        .sheet(item: $selectedProduct) { product in
+                            NavigationStack {
+                                Details(viewModel: viewModel, product: product)
+                                    .presentationDragIndicator(.visible)
                             }
                         }
                     }
@@ -93,12 +104,22 @@ struct Home: View {
                                 ),
                                 id: \.self
                             ) { product in
-                                VerticalProductCard(
-                                    viewModel: viewModel,
-                                    width: 214,
-                                    height: 302,
-                                    product: product
-                                )
+                                Button {
+                                    selectedProduct = product
+                                } label: {
+                                    VerticalProductCard(
+                                        viewModel: viewModel,
+                                        width: 214,
+                                        height: 302,
+                                        product: product
+                                    )
+                                }
+                            }
+                        }
+                        .sheet(item: $selectedProduct) { product in
+                            NavigationStack {
+                                Details(viewModel: viewModel, product: product)
+                                    .presentationDragIndicator(.visible)
                             }
                         }
 
@@ -111,10 +132,21 @@ struct Home: View {
                         LazyVGrid(columns: iPadDealsOfTheDayColumns, spacing: 0)
                         {
                             ForEach(deals) { product in
-                                ProductCard(
-                                    viewModel: viewModel,
-                                    product: product
-                                )
+                                Button {
+                                    selectedProduct = product
+                                } label: {
+                                    ProductCard(
+                                        viewModel: viewModel,
+                                        height: 167,
+                                        product: product
+                                    )
+                                }
+                            }
+                        }
+                        .sheet(item: $selectedProduct) { product in
+                            NavigationStack {
+                                Details(viewModel: viewModel, product: product)
+                                    .presentationDragIndicator(.visible)
                             }
                         }
                     }
@@ -127,12 +159,22 @@ struct Home: View {
                                 iPadTopPicks,
                                 id: \.self
                             ) { product in
-                                VerticalProductCard(
-                                    viewModel: viewModel,
-                                    width: 181,
-                                    height: 256,
-                                    product: product
-                                )
+                                Button {
+                                    selectedProduct = product
+                                } label: {
+                                    VerticalProductCard(
+                                        viewModel: viewModel,
+                                        width: 181,
+                                        height: 256,
+                                        product: product
+                                    )
+                                }
+                            }
+                        }
+                        .sheet(item: $selectedProduct) { product in
+                            NavigationStack {
+                                Details(viewModel: viewModel, product: product)
+                                    .presentationDragIndicator(.visible)
                             }
                         }
                     }
@@ -146,12 +188,25 @@ struct Home: View {
                                     bestSellers,
                                     id: \.self
                                 ) { product in
-                                    VerticalProductCard(
+                                    Button {
+                                        selectedProduct = product
+                                    } label: {
+                                        VerticalProductCard(
+                                            viewModel: viewModel,
+                                            width: 181,
+                                            height: 256,
+                                            product: product
+                                        )
+                                    }
+                                }
+                            }
+                            .sheet(item: $selectedProduct) { product in
+                                NavigationStack {
+                                    Details(
                                         viewModel: viewModel,
-                                        width: 181,
-                                        height: 256,
                                         product: product
                                     )
+                                    .presentationDragIndicator(.visible)
                                 }
                             }
                         }
@@ -163,7 +218,17 @@ struct Home: View {
                     Text("Deals of the Day")
                         .font(.title2).fontWeight(.bold)
                     if let deal = dealOfTheDay {
-                        ProductCard(viewModel: viewModel, product: deal)
+                        Button {
+                            selectedProduct = deal
+                        } label: {
+                            ProductCard(viewModel: viewModel, height: 160, product: deal)
+                        }
+                        .sheet(item: $selectedProduct) { product in
+                            NavigationStack {
+                                Details(viewModel: viewModel, product: product)
+                                    .presentationDragIndicator(.visible)
+                            }
+                        }
                     }
 
                     Text("Top picks")
@@ -177,12 +242,22 @@ struct Home: View {
                             ),
                             id: \.self
                         ) { product in
-                            VerticalProductCard(
-                                viewModel: viewModel,
-                                width: 177,
-                                height: 250,
-                                product: product
-                            )
+                            Button {
+                                selectedProduct = product
+                            } label: {
+                                VerticalProductCard(
+                                    viewModel: viewModel,
+                                    width: 177,
+                                    height: 250,
+                                    product: product
+                                )
+                            }
+                        }
+                    }
+                    .sheet(item: $selectedProduct) { product in
+                        NavigationStack {
+                            Details(viewModel: viewModel, product: product)
+                                .presentationDragIndicator(.visible)
                         }
                     }
                 }
