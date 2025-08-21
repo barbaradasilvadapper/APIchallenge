@@ -26,7 +26,7 @@ struct FavoriteButton: View {
     var body: some View {
         ZStack {
             Button {
-                if let favoriteToRemove = favoritesList.first(where: { $0.id == product.id }) {
+                if let _ = favoritesList.first(where: { $0.id == product.id }) {
                     viewModel.removeFromFavorites(productID: product.id)
                 } else {
                     viewModel.addToFavorites(productID: product.id)

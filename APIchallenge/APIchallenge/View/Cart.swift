@@ -97,9 +97,6 @@ struct Cart: View {
                 
             }
         }
-        .task {
-            await viewModel.fetch()
-        }
         .accessibilityElement(children: .contain)
         .navigationTitle("Cart")
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
