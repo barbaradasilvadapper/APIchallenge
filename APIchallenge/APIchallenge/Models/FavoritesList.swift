@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class FavoritesList {
+class FavoritesList: Identifiable {
     var id: Int
     
     init(id: Int) {

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ProductListCart: View {
     
-    let viewModel: any ViewModelProtocol
+    let onFavoriteClick: () -> Void
+    let onCartClick: () -> Void
     
     @State var product: Product
     @State var selectedProduct: Product?
@@ -57,7 +58,11 @@ struct ProductListCart: View {
                 }
                 .sheet(item: $selectedProduct) { product in
                     NavigationStack {
-                        Details(viewModel: viewModel, product: product)
+                        Details(
+                            onFavoriteClick: { onFavoriteClick() },
+                            onCartClick: { onCartClick() },
+                            product: product
+                        )
                             .presentationDragIndicator(.visible)
                     }
                 }

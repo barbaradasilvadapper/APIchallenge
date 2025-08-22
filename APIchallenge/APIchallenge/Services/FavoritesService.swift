@@ -8,6 +8,7 @@ import Foundation
 import SwiftData
 
 @MainActor
+@Observable
 final class FavoritesService: FavoritesServiceProtocol {
     let modelContext: ModelContext
 

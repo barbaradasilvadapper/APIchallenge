@@ -9,9 +9,11 @@ import SwiftUI
 
 struct Categories: View {
 
+    @State var hasLoaded: Bool = false
+    
     @State var searchText: String = ""
 
-    let viewModel: any ViewModelProtocol
+    let viewModel: any CategoriesViewModelProtocol
 
     var topCategories: [Category]? {
         if viewModel.categories.isEmpty { return nil }
@@ -57,6 +59,12 @@ struct Categories: View {
         .navigationTitle("Categories")
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
+        .task {
+            if !hasLoaded {
+                await viewModel.fetch()
+                hasLoaded = true
+            }
+        }
     }
 }
 

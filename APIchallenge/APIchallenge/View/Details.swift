@@ -11,18 +11,11 @@ import SwiftData
 struct Details: View {
     @Environment(\.dismiss) private var dismiss
     
-    let viewModel: any ViewModelProtocol
-    
-    var cartList: [CartList] {
-        viewModel.cartList
-    }
+    let onFavoriteClick: () -> Void
+    let onCartClick: () -> Void
     
     @State var product: Product
     @State private var goToCart = false
-    
-    private var isCartInStorage: Bool {
-        cartList.contains(where: { $0.id == product.id })
-    }
     
     var body: some View {
         
@@ -37,7 +30,7 @@ struct Details: View {
                             } placeholder: {
                                 Image(.bag)
                             }
-                            FavoriteButton(onClick: { viewModel.addToFavorites(productID: product.id) }, size: .title, product: $product)
+                            FavoriteButton(onClick: { onFavoriteClick() }, size: .title, product: $product)
                         }
                         .frame(width: 329, height: 329)
                         .frame(maxWidth: .infinity)
@@ -76,11 +69,7 @@ struct Details: View {
                 .padding(.top, 16)
             }
             Button {
-                if let existing = cartList.first(where: { $0.id == product.id }) {
-                    existing.quantity += 1
-                } else {
-                    viewModel.addToCart(productID: product.id,)
-                }
+                onCartClick()
                 dismiss()
             } label: {
                 Text("Add to cart")

@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct CategoryFilter: View {
-
+    
     var category: Category
 
-    var viewModel: any ViewModelProtocol
+    var viewModel: any CategoriesViewModelProtocol
+    
+    @State var hasLoaded: Bool = false
 
     @State var searchText: String = ""
     @State var selectedProduct: Product? = nil
@@ -64,7 +66,11 @@ struct CategoryFilter: View {
                 }
                 .sheet(item: $selectedProduct) { product in
                     NavigationStack {
-                        Details(viewModel: viewModel, product: product)
+                        Details(
+                            onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
+                            onCartClick: { viewModel.addToCart(productID: product.id) },
+                            product: product
+                        )
                             .presentationDragIndicator(.visible)
                     }
                 }
@@ -73,6 +79,12 @@ struct CategoryFilter: View {
         }
         .navigationTitle(category.stringLocalized.capitalized)
         .navigationBarTitleDisplayMode(.inline)
+        .task {
+            if !hasLoaded {
+                await viewModel.fetch()
+                hasLoaded = true
+            }
+        }
     }
 }
 

@@ -9,40 +9,53 @@ import SwiftUI
 
 struct TabBar: View {
     
-    let vm: ViewModelProtocol = ViewModel(APIservice: APIService(), favoritesService: FavoritesService(), cartService: CartService(), ordersService: OrdersService())
+    let apiService = APIService()
+    let favoritesService = FavoritesService()
+    let cartService = CartService()
+    let orderService = OrdersService()
+    
+    let homeViewModel = HomeViewModel(APIservice: APIService(), favoritesService: FavoritesService(), cartService: CartService())
+    
+    let categoriesViewModel = CategoriesViewModel(APIservice: APIService(), favoritesService: FavoritesService(), cartService: CartService())
+    
+    let cartViewModel = CartViewModel(APIservice: APIService(), favoritesService: FavoritesService(), cartService: CartService(), orderService: OrdersService())
+    
+    let favoritesViewModel = FavoritesViewModel(APIservice: APIService(), favoritesService: FavoritesService(), cartService: CartService())
+    
+    let orderViewModel = OrderViewModel(APIservice: APIService(), orderService: OrdersService())
     
     var body: some View {
         TabView {
             NavigationStack {
-                Home(viewModel: vm)
+                Home(viewModel: homeViewModel)
             }
             .tabItem {
                 Label("Home", systemImage: "house")
             }
             
             NavigationStack {
-                Categories(viewModel: vm)
+                Categories(viewModel: categoriesViewModel)
             }
             .tabItem {
                 Label("Categories", systemImage: "square.grid.2x2")
             }
             
             NavigationStack {
-                Cart(viewModel: vm)
+                Cart(viewModel: cartViewModel)
             }
             .tabItem {
                 Label("Cart", systemImage: "cart")
             }
             
             NavigationStack {
-                Favorites(viewModel: vm)
+                Favorites(viewModel: favoritesViewModel)
             }
             .tabItem {
                 Label("Favorites", systemImage: "heart")
             }
             
             NavigationStack {
-                Orders(viewModel: vm)
+                Orders(viewModel: orderViewModel)
             }
             .tabItem {
                 Label("Orders", systemImage: "bag")

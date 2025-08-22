@@ -9,7 +9,9 @@ import SwiftData
 
 struct Orders: View {
     
-    var viewModel: ViewModelProtocol
+    var viewModel: any OrdersVIewModelProtocol
+    
+    @State var hasLoaded: Bool = false
 
     @State var orderList: [OrderList] = []
     
@@ -54,6 +56,12 @@ struct Orders: View {
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
         .onAppear {
             orderList = viewModel.orderList
+        }
+        .task {
+            if !hasLoaded {
+                await viewModel.fetch()
+                hasLoaded = true
+            }
         }
     }
 }

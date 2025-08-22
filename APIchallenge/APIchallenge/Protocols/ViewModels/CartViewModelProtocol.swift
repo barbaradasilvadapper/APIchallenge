@@ -1,13 +1,13 @@
 //
-//  ViewModelProtocol.swift
+//  CartViewModelProtocol.swift
 //  APIchallenge
 //
-//  Created by João Pedro Teixeira de Carvalho on 13/08/25.
+//  Created by João Pedro Teixeira de Carvalho on 22/08/25.
 //
 import Foundation
 
 @MainActor
-protocol ViewModelProtocol {
+protocol CartViewModelProtocol {
     // API Service
     var productService: any APIServiceProtocol { get }
     var products: [Int: Product] { get }
@@ -22,7 +22,6 @@ protocol ViewModelProtocol {
     func addToCart(productID: Int)
     func removeFromCart(productID: Int, quantity: Int)
     func clearCart()
-    var productCount: [(Product, Int)] { get }
 
     // Favorites Service
     var favoritesService: any FavoritesServiceProtocol { get }

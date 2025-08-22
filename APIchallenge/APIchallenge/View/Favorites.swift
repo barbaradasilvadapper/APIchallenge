@@ -1,3 +1,4 @@
+import SwiftData
 //
 //  Favorites.swift
 //  APIchallenge
@@ -5,22 +6,23 @@
 //  Created by Bárbara Dapper on 15/08/25.
 //
 import SwiftUI
-import SwiftData
 
 struct Favorites: View {
+
+    var viewModel: any FavoritesViewModelProtocol
     
-    var viewModel: ViewModelProtocol
+    @State var hasLoaded: Bool = false
 
     @State var favoritesList: [FavoritesList] = []
-    
+
     @State var searchText: String = ""
-    
+
     var favorites: [Product] {
         favoritesList.compactMap {
             viewModel.products[$0.id]
         }
     }
-    
+
     var searchedProducts: [Product] {
         if searchText.isEmpty {
             return favorites
@@ -30,20 +32,28 @@ struct Favorites: View {
             $0.title.lowercased().contains(searchText.lowercased())
         }
     }
-    
+
     var body: some View {
         VStack {
             SearchBar(searchText: $searchText)
-            
+
             if favorites.isEmpty {
                 EmptyStateFavorites()
                     .padding(.top, 156)
             }
-            
+
             ScrollView {
                 VStack(spacing: 16) {
                     ForEach(searchedProducts, id: \.id) { product in
-                        ProductListCart(viewModel: viewModel, product: product)
+                        ProductListCart(
+                            onFavoriteClick: {
+                                viewModel.addToFavorites(productID: product.id)
+                            },
+                            onCartClick: {
+                                viewModel.addToCart(productID: product.id)
+                            },
+                            product: product
+                        )
                     }
                 }
                 .padding(16)
@@ -55,10 +65,11 @@ struct Favorites: View {
         .onAppear {
             favoritesList = viewModel.favoritesList
         }
+        .task {
+            if !hasLoaded {
+                await viewModel.fetch()
+                hasLoaded = true
+            }
+        }
     }
 }
-
-//#Preview {
-//    NavigationStack { Favorites(viewModel: ViewModel(APIservice: APIService(), dataSource: SwiftDataService()))
-//    }
-//}

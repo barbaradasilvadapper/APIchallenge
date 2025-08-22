@@ -9,7 +9,9 @@ import SwiftData
 import SwiftUI
 
 struct Cart: View {
-    var viewModel: ViewModelProtocol
+    var viewModel: any CartViewModelProtocol
+    
+    @State var hasLoaded: Bool = false
     
     @State var refreshID = UUID()
     
@@ -120,6 +122,12 @@ struct Cart: View {
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
         .onAppear {
             cartList = viewModel.cartList
+        }
+        .task {
+            if !hasLoaded {
+                await viewModel.fetch()
+                hasLoaded = true
+            }
         }
         .id(refreshID)
     }

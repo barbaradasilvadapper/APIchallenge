@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Home: View {
 
-    var viewModel: any ViewModelProtocol
+    var viewModel: any HomeViewModelProtocol
     var dealOfTheDay: Product? {
         viewModel.products.values.first
     }
@@ -85,7 +85,11 @@ struct Home: View {
                         }
                         .sheet(item: $selectedProduct) { product in
                             NavigationStack {
-                                Details(viewModel: viewModel, product: product)
+                                Details(
+                                    onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
+                                    onCartClick: { viewModel.addToCart(productID: product.id) },
+                                    product: product
+                                )
                                     .presentationDragIndicator(.visible)
                             }
                         }
@@ -118,7 +122,11 @@ struct Home: View {
                         }
                         .sheet(item: $selectedProduct) { product in
                             NavigationStack {
-                                Details(viewModel: viewModel, product: product)
+                                Details(
+                                    onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
+                                    onCartClick: { viewModel.addToCart(productID: product.id) },
+                                    product: product
+                                )
                                     .presentationDragIndicator(.visible)
                             }
                         }
@@ -145,7 +153,11 @@ struct Home: View {
                         }
                         .sheet(item: $selectedProduct) { product in
                             NavigationStack {
-                                Details(viewModel: viewModel, product: product)
+                                Details(
+                                    onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
+                                    onCartClick: { viewModel.addToCart(productID: product.id) },
+                                    product: product
+                                )
                                     .presentationDragIndicator(.visible)
                             }
                         }
@@ -163,7 +175,9 @@ struct Home: View {
                                     selectedProduct = product
                                 } label: {
                                     VerticalProductCard(
-                                        onClick: { toggleFavorites(product) },
+                                        onClick: {
+                                            toggleFavorites(product)
+                                        },
                                         width: 181,
                                         height: 256,
                                         product: product
@@ -173,7 +187,11 @@ struct Home: View {
                         }
                         .sheet(item: $selectedProduct) { product in
                             NavigationStack {
-                                Details(viewModel: viewModel, product: product)
+                                Details(
+                                    onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
+                                    onCartClick: { viewModel.addToCart(productID: product.id) },
+                                    product: product
+                                )
                                     .presentationDragIndicator(.visible)
                             }
                         }
@@ -203,7 +221,8 @@ struct Home: View {
                             .sheet(item: $selectedProduct) { product in
                                 NavigationStack {
                                     Details(
-                                        viewModel: viewModel,
+                                        onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
+                                        onCartClick: { viewModel.addToCart(productID: product.id) },
                                         product: product
                                     )
                                     .presentationDragIndicator(.visible)
@@ -225,7 +244,11 @@ struct Home: View {
                         }
                         .sheet(item: $selectedProduct) { product in
                             NavigationStack {
-                                Details(viewModel: viewModel, product: product)
+                                Details(
+                                    onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
+                                    onCartClick: { viewModel.addToCart(productID: product.id) },
+                                    product: product
+                                )
                                     .presentationDragIndicator(.visible)
                             }
                         }
@@ -256,7 +279,11 @@ struct Home: View {
                     }
                     .sheet(item: $selectedProduct) { product in
                         NavigationStack {
-                            Details(viewModel: viewModel, product: product)
+                            Details(
+                                onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
+                                onCartClick: { viewModel.addToCart(productID: product.id) },
+                                product: product
+                            )
                                 .presentationDragIndicator(.visible)
                         }
                     }
@@ -279,7 +306,6 @@ struct Home: View {
     
     private func toggleFavorites(_ product: Product) {
         viewModel.addToFavorites(productID: product.id)
-        print(viewModel.products[product.id]?.isFavourite)
     }
 }
 
