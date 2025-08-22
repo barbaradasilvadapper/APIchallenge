@@ -76,7 +76,7 @@ struct Home: View {
                                     selectedProduct = product
                                 } label: {
                                     ProductCard(
-                                        onClick: { viewModel.addToFavorites(productID: product.id) },
+                                        onClick: { toggleFavorites(product) },
                                         height: 255,
                                         product: product
                                     )
@@ -108,7 +108,7 @@ struct Home: View {
                                     selectedProduct = product
                                 } label: {
                                     VerticalProductCard(
-                                        onClick: { viewModel.addToFavorites(productID: product.id) },
+                                        onClick: { toggleFavorites(product) },
                                         width: 214,
                                         height: 302,
                                         product: product
@@ -136,7 +136,7 @@ struct Home: View {
                                     selectedProduct = product
                                 } label: {
                                     ProductCard(
-                                        onClick: { viewModel.addToFavorites(productID: product.id) },
+                                        onClick: { toggleFavorites(product) },
                                         height: 167,
                                         product: product
                                     )
@@ -163,7 +163,7 @@ struct Home: View {
                                     selectedProduct = product
                                 } label: {
                                     VerticalProductCard(
-                                        onClick: { viewModel.addToFavorites(productID: product.id) },
+                                        onClick: { toggleFavorites(product) },
                                         width: 181,
                                         height: 256,
                                         product: product
@@ -192,7 +192,7 @@ struct Home: View {
                                         selectedProduct = product
                                     } label: {
                                         VerticalProductCard(
-                                            onClick: { viewModel.addToFavorites(productID: product.id) },
+                                            onClick: { toggleFavorites(product) },
                                             width: 181,
                                             height: 256,
                                             product: product
@@ -221,7 +221,7 @@ struct Home: View {
                         Button {
                             selectedProduct = deal
                         } label: {
-                            ProductCard(onClick: { viewModel.addToFavorites(productID: deal.id) }, height: 160, product: deal)
+                            ProductCard(onClick: { toggleFavorites(deal) }, height: 160, product: deal)
                         }
                         .sheet(item: $selectedProduct) { product in
                             NavigationStack {
@@ -246,7 +246,7 @@ struct Home: View {
                                 selectedProduct = product
                             } label: {
                                 VerticalProductCard(
-                                    onClick: { viewModel.addToFavorites(productID: product.id) },
+                                    onClick: { toggleFavorites(product) },
                                     width: 177,
                                     height: 250,
                                     product: product
@@ -275,6 +275,11 @@ struct Home: View {
             }
         }
         .navigationTitle("Home")
+    }
+    
+    private func toggleFavorites(_ product: Product) {
+        viewModel.addToFavorites(productID: product.id)
+        print(viewModel.products[product.id]?.isFavourite)
     }
 }
 

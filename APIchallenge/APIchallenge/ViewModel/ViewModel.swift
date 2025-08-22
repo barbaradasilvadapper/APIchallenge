@@ -62,6 +62,8 @@ class ViewModel: ViewModelProtocol {
         }
         
         favoritesService.addToFavorites(productID: productID)
+        
+        products[productID]?.isFavourite.toggle()
     }
     
     func removeFromFavorites(productID: Int) {
