@@ -68,6 +68,8 @@ struct Home: View {
 
                 // Horizontal iPad
                 VStack(alignment: .leading, spacing: 16) {
+                    Text("Deals of the Day")
+                        .font(.title2).fontWeight(.bold)
                     if let deals = iPadDealsOfTheDay {
                         LazyVGrid(columns: iPadDealsOfTheDayColumns, spacing: 0)
                         {
@@ -136,6 +138,8 @@ struct Home: View {
 
                 // Wide (iPad) layout
                 VStack(alignment: .leading, spacing: 16) {
+                    Text("Deals of the Day")
+                        .font(.title2).fontWeight(.bold)
                     if let deals = iPadDealsOfTheDay {
                         LazyVGrid(columns: iPadDealsOfTheDayColumns, spacing: 0)
                         {
