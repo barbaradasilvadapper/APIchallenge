@@ -24,7 +24,11 @@ struct Home: View {
 
     /* iPad vars */
     var iPadDealsOfTheDay: [Product]? {
-        Array(viewModel.products.values.prefix(2))
+        guard let product1 = viewModel.products[1],
+                let product2 = viewModel.products[11]
+        else { return nil }
+        
+        return [product1, product2]
     }
 
     let iPadDealsOfTheDayColumns = [
