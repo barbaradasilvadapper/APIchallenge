@@ -112,7 +112,14 @@
       }
     },
     "Best Sellers" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mais Vendidos"
+          }
+        }
+      }
     },
     "Buy an item and it will show up here." : {
       "localizations" : {
