@@ -47,9 +47,7 @@ struct Categories: View {
                     } label: {
                         Text(category.stringLocalized.capitalized)
                     }
-                    .onAppear(perform: {
-                        print("JORGE", category)
-                    })
+
                     .listRowBackground(Color.clear)
                 }
                 .listStyle(.plain)
