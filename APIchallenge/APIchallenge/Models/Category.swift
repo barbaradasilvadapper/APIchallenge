@@ -25,7 +25,7 @@ enum Category: Codable, Identifiable, Hashable {
     case sunglasses
     case tablets
     case tops
-    case automotive
+    case vehicle
     case womensBags
     case womensDresses
     case womensJewellery
@@ -57,7 +57,7 @@ enum Category: Codable, Identifiable, Hashable {
         case .sunglasses: return "sunglasses"
         case .tablets: return "tablets"
         case .tops: return "tops"
-        case .automotive: return "automotive"
+        case .vehicle: return "vehicle"
         case .womensBags: return "womens-bags"
         case .womensDresses: return "womens-dresses"
         case .womensJewellery: return "womens-jewellery"
@@ -89,7 +89,7 @@ enum Category: Codable, Identifiable, Hashable {
         case "sunglasses": self = .sunglasses
         case "tablets": self = .tablets
         case "tops": self = .tops
-        case "automotive": self = .automotive
+        case "vehicle": self = .vehicle
         case "womens-bags": self = .womensBags
         case "womens-dresses": self = .womensDresses
         case "womens-jewellery": self = .womensJewellery
@@ -125,7 +125,7 @@ enum Category: Codable, Identifiable, Hashable {
         case .sunglasses: return String(localized: "Sunglasses")
         case .tablets: return String(localized: "Tablets")
         case .tops: return String(localized: "Tops")
-        case .automotive: return String(localized: "Vehicle")
+        case .vehicle: return String(localized: "Vehicle")
         case .womensBags: return String(localized: "Womens Bags")
         case .womensDresses: return String(localized: "Womens Dresses")
         case .womensJewellery: return String(localized: "Womens Jewellery")
@@ -157,7 +157,7 @@ enum Category: Codable, Identifiable, Hashable {
         case .sunglasses: return "sunglasses.fill"
         case .tablets: return "ipad"
         case .tops: return "jacket.fill"
-        case .automotive: return "car.fill"
+        case .vehicle: return "car.fill"
         case .womensBags: return "handbag.fill"
         case .womensDresses: return "figure.stand.dress"
         case .womensJewellery: return "crown.fill"
@@ -189,7 +189,7 @@ extension Category {
         case "sunglasses": self = .sunglasses
         case "tablets": self = .tablets
         case "tops": self = .tops
-        case "automotive": self = .automotive
+        case "vehicle": self = .vehicle
         case "womens-bags": self = .womensBags
         case "womens-dresses": self = .womensDresses
         case "womens-jewellery": self = .womensJewellery
