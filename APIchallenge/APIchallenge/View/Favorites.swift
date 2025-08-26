@@ -10,7 +10,7 @@ import SwiftUI
 struct Favorites: View {
 
     var viewModel: any FavoritesViewModelProtocol
-    
+
     @State var hasLoaded: Bool = false
 
     @State var favoritesList: [FavoritesList] = []
@@ -37,26 +37,35 @@ struct Favorites: View {
         VStack {
             SearchBar(searchText: $searchText)
 
-            if favorites.isEmpty {
-                EmptyStateFavorites()
-                    .padding(.top, 156)
-            }
+            if viewModel.isLoading {
+                Spacer()
+                ProgressView()
+                Spacer()
+            } else {
 
-            ScrollView {
-                VStack(spacing: 16) {
-                    ForEach(searchedProducts, id: \.id) { product in
-                        ProductListCart(
-                            onFavoriteClick: {
-                                viewModel.addToFavorites(productID: product.id)
-                            },
-                            onCartClick: {
-                                viewModel.addToCart(productID: product.id)
-                            },
-                            product: product
-                        )
-                    }
+                if favorites.isEmpty {
+                    EmptyStateFavorites()
+                        .padding(.top, 156)
                 }
-                .padding(16)
+
+                ScrollView {
+                    VStack(spacing: 16) {
+                        ForEach(searchedProducts, id: \.id) { product in
+                            ProductListCart(
+                                onFavoriteClick: {
+                                    viewModel.addToFavorites(
+                                        productID: product.id
+                                    )
+                                },
+                                onCartClick: {
+                                    viewModel.addToCart(productID: product.id)
+                                },
+                                product: product
+                            )
+                        }
+                    }
+                    .padding(16)
+                }
             }
         }
         .navigationTitle("Favorites")

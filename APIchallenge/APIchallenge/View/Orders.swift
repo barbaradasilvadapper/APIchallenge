@@ -1,3 +1,4 @@
+import SwiftData
 //
 //  Orders.swift
 //  APIchallenge
@@ -5,24 +6,23 @@
 //  Created by Bárbara Dapper on 15/08/25.
 //
 import SwiftUI
-import SwiftData
 
 struct Orders: View {
-    
+
     var viewModel: any OrdersVIewModelProtocol
-    
+
     @State var hasLoaded: Bool = false
 
     @State var orderList: [OrderList] = []
-    
+
     @State var searchText: String = ""
-    
+
     var orders: [Product] {
         orderList.compactMap {
             viewModel.products[$0.id]
         }
     }
-    
+
     var searchedProducts: [Product] {
         if searchText.isEmpty {
             return orders
@@ -32,23 +32,30 @@ struct Orders: View {
             $0.title.lowercased().contains(searchText.lowercased())
         }
     }
-    
+
     var body: some View {
         VStack {
             SearchBar(searchText: $searchText)
-            
-            if orders.isEmpty {
-                EmptyStateOrders()
-                    .padding(.top, 156)
-            }
-            
-            ScrollView {
-                VStack(spacing: 16) {
-                    ForEach(searchedProducts, id: \.id) { product in
-                        OrderCard(product: product)
-                    }
+
+            if viewModel.isLoading {
+                Spacer()
+                ProgressView()
+                Spacer()
+            } else {
+
+                if orders.isEmpty {
+                    EmptyStateOrders()
+                        .padding(.top, 156)
                 }
-                .padding(16)
+
+                ScrollView {
+                    VStack(spacing: 16) {
+                        ForEach(searchedProducts, id: \.id) { product in
+                            OrderCard(product: product)
+                        }
+                    }
+                    .padding(16)
+                }
             }
         }
         .navigationTitle("Orders")
@@ -65,4 +72,3 @@ struct Orders: View {
         }
     }
 }
-

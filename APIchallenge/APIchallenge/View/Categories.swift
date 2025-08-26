@@ -10,7 +10,7 @@ import SwiftUI
 struct Categories: View {
 
     @State var hasLoaded: Bool = false
-    
+
     @State var searchText: String = ""
 
     let viewModel: any CategoriesViewModelProtocol
@@ -19,7 +19,7 @@ struct Categories: View {
         if viewModel.categories.isEmpty { return nil }
         return Array(filteredCategories.prefix(4))
     }
-    
+
     var filteredCategories: [Category] {
         if searchText.isEmpty {
             return viewModel.categories
@@ -40,21 +40,24 @@ struct Categories: View {
                         CategoryIcon(category: category)
                     }
                 }
-            } else {
-                Text("Failed to load categories")
-            }
 
-            List(filteredCategories) { category in
-                NavigationLink {
-                    CategoryFilter(category: category, viewModel: viewModel)
-                } label: {
-                    Text(category.stringLocalized.capitalized)
+                List(filteredCategories) { category in
+                    NavigationLink {
+                        CategoryFilter(category: category, viewModel: viewModel)
+                    } label: {
+                        Text(category.stringLocalized.capitalized)
+                    }
+                    .listRowBackground(Color.clear)
                 }
-                .listRowBackground(Color.clear)
-            }
-            .listStyle(.plain)
+                .listStyle(.plain)
 
-            Spacer()
+                Spacer()
+
+            } else {
+                Spacer()
+                ProgressView()
+                Spacer()
+            }
         }
         .navigationTitle("Categories")
         .toolbarBackgroundVisibility(.visible, for: .tabBar)

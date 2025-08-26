@@ -25,9 +25,9 @@ struct Home: View {
     /* iPad vars */
     var iPadDealsOfTheDay: [Product]? {
         guard let product1 = viewModel.products[1],
-                let product2 = viewModel.products[11]
+            let product2 = viewModel.products[11]
         else { return nil }
-        
+
         return [product1, product2]
     }
 
@@ -68,157 +68,165 @@ struct Home: View {
 
     var body: some View {
         ScrollView {
-            ViewThatFits {
+            if viewModel.isLoading {
+                ProgressView()
+            } else {
 
-                // Horizontal iPad
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Deals of the Day")
-                        .font(.title2).fontWeight(.bold)
-                    if let deals = iPadDealsOfTheDay {
-                        LazyVGrid(columns: iPadDealsOfTheDayColumns, spacing: 0)
-                        {
-                            ForEach(deals) { product in
-                                Button {
-                                    selectedProduct = product
-                                } label: {
-                                    ProductCard(
-                                        onClick: { toggleFavorites(product) },
-                                        height: 255,
-                                        product: product
-                                    )
-                                }
-                            }
-                        }
-                        .sheet(item: $selectedProduct) { product in
-                            NavigationStack {
-                                Details(
-                                    onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
-                                    onCartClick: { viewModel.addToCart(productID: product.id) },
-                                    product: product
-                                )
-                                    .presentationDragIndicator(.visible)
-                            }
-                        }
-                    }
+                ViewThatFits {
 
-                    VStack(alignment: .leading) {
-                        Text("Top picks")
+                    // Horizontal iPad
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Deals of the Day")
                             .font(.title2).fontWeight(.bold)
-
-                        LazyVGrid(columns: iPadHorizontalColumns, spacing: 16) {
-                            ForEach(
-                                Array(
-                                    viewModel.products.values.sorted {
-                                        $0.title < $1.title
+                        if let deals = iPadDealsOfTheDay {
+                            LazyVGrid(
+                                columns: iPadDealsOfTheDayColumns,
+                                spacing: 0
+                            ) {
+                                ForEach(deals) { product in
+                                    Button {
+                                        selectedProduct = product
+                                    } label: {
+                                        ProductCard(
+                                            onClick: {
+                                                toggleFavorites(product)
+                                            },
+                                            height: 255,
+                                            product: product
+                                        )
                                     }
-                                ),
-                                id: \.self
-                            ) { product in
-                                Button {
-                                    selectedProduct = product
-                                } label: {
-                                    VerticalProductCard(
-                                        onClick: { toggleFavorites(product) },
-                                        width: 214,
-                                        height: 302,
-                                        product: product
-                                    )
                                 }
                             }
-                        }
-                        .sheet(item: $selectedProduct) { product in
-                            NavigationStack {
-                                Details(
-                                    onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
-                                    onCartClick: { viewModel.addToCart(productID: product.id) },
-                                    product: product
-                                )
-                                    .presentationDragIndicator(.visible)
-                            }
-                        }
-
-                    }
-                }
-
-                // Wide (iPad) layout
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Deals of the Day")
-                        .font(.title2).fontWeight(.bold)
-                    if let deals = iPadDealsOfTheDay {
-                        LazyVGrid(columns: iPadDealsOfTheDayColumns, spacing: 0)
-                        {
-                            ForEach(deals) { product in
-                                Button {
-                                    selectedProduct = product
-                                } label: {
-                                    ProductCard(
-                                        onClick: { toggleFavorites(product) },
-                                        height: 167,
-                                        product: product
-                                    )
-                                }
-                            }
-                        }
-                        .sheet(item: $selectedProduct) { product in
-                            NavigationStack {
-                                Details(
-                                    onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
-                                    onCartClick: { viewModel.addToCart(productID: product.id) },
-                                    product: product
-                                )
-                                    .presentationDragIndicator(.visible)
-                            }
-                        }
-                    }
-
-                    VStack(alignment: .leading) {
-                        Text("Top picks")
-                            .font(.title2).fontWeight(.bold)
-                        LazyVGrid(columns: iPadColumns, spacing: 16) {
-                            ForEach(
-                                iPadTopPicks,
-                                id: \.self
-                            ) { product in
-                                Button {
-                                    selectedProduct = product
-                                } label: {
-                                    VerticalProductCard(
-                                        onClick: {
-                                            toggleFavorites(product)
+                            .sheet(item: $selectedProduct) { product in
+                                NavigationStack {
+                                    Details(
+                                        onFavoriteClick: {
+                                            viewModel.addToFavorites(
+                                                productID: product.id
+                                            )
                                         },
-                                        width: 181,
-                                        height: 256,
+                                        onCartClick: {
+                                            viewModel.addToCart(
+                                                productID: product.id
+                                            )
+                                        },
                                         product: product
                                     )
+                                    .presentationDragIndicator(.visible)
                                 }
                             }
                         }
-                        .sheet(item: $selectedProduct) { product in
-                            NavigationStack {
-                                Details(
-                                    onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
-                                    onCartClick: { viewModel.addToCart(productID: product.id) },
-                                    product: product
-                                )
-                                    .presentationDragIndicator(.visible)
-                            }
-                        }
-                    }
 
-                    VStack(alignment: .leading) {
-                        Text("Best Sellers")
-                            .font(.title2).fontWeight(.bold)
-                        if let bestSellers = iPadBestSellers {
-                            LazyVGrid(columns: iPadColumns, spacing: 16) {
+                        VStack(alignment: .leading) {
+                            Text("Top picks")
+                                .font(.title2).fontWeight(.bold)
+
+                            LazyVGrid(
+                                columns: iPadHorizontalColumns,
+                                spacing: 16
+                            ) {
                                 ForEach(
-                                    bestSellers,
+                                    Array(
+                                        viewModel.products.values.sorted {
+                                            $0.title < $1.title
+                                        }
+                                    ),
                                     id: \.self
                                 ) { product in
                                     Button {
                                         selectedProduct = product
                                     } label: {
                                         VerticalProductCard(
-                                            onClick: { toggleFavorites(product) },
+                                            onClick: {
+                                                toggleFavorites(product)
+                                            },
+                                            width: 214,
+                                            height: 302,
+                                            product: product
+                                        )
+                                    }
+                                }
+                            }
+                            .sheet(item: $selectedProduct) { product in
+                                NavigationStack {
+                                    Details(
+                                        onFavoriteClick: {
+                                            viewModel.addToFavorites(
+                                                productID: product.id
+                                            )
+                                        },
+                                        onCartClick: {
+                                            viewModel.addToCart(
+                                                productID: product.id
+                                            )
+                                        },
+                                        product: product
+                                    )
+                                    .presentationDragIndicator(.visible)
+                                }
+                            }
+
+                        }
+                    }
+
+                    // Wide (iPad) layout
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Deals of the Day")
+                            .font(.title2).fontWeight(.bold)
+                        if let deals = iPadDealsOfTheDay {
+                            LazyVGrid(
+                                columns: iPadDealsOfTheDayColumns,
+                                spacing: 0
+                            ) {
+                                ForEach(deals) { product in
+                                    Button {
+                                        selectedProduct = product
+                                    } label: {
+                                        ProductCard(
+                                            onClick: {
+                                                toggleFavorites(product)
+                                            },
+                                            height: 167,
+                                            product: product
+                                        )
+                                    }
+                                }
+                            }
+                            .sheet(item: $selectedProduct) { product in
+                                NavigationStack {
+                                    Details(
+                                        onFavoriteClick: {
+                                            viewModel.addToFavorites(
+                                                productID: product.id
+                                            )
+                                        },
+                                        onCartClick: {
+                                            viewModel.addToCart(
+                                                productID: product.id
+                                            )
+                                        },
+                                        product: product
+                                    )
+                                    .presentationDragIndicator(.visible)
+                                }
+                            }
+                        }
+
+                        VStack(alignment: .leading) {
+                            Text("Top picks")
+                                .font(.title2).fontWeight(.bold)
+                            LazyVGrid(columns: iPadColumns, spacing: 16) {
+                                ForEach(
+                                    iPadTopPicks,
+                                    id: \.self
+                                ) { product in
+                                    Button {
+                                        selectedProduct = product
+                                    } label: {
+                                        VerticalProductCard(
+                                            onClick: {
+                                                toggleFavorites(product)
+                                            },
                                             width: 181,
                                             height: 256,
                                             product: product
@@ -229,70 +237,142 @@ struct Home: View {
                             .sheet(item: $selectedProduct) { product in
                                 NavigationStack {
                                     Details(
-                                        onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
-                                        onCartClick: { viewModel.addToCart(productID: product.id) },
+                                        onFavoriteClick: {
+                                            viewModel.addToFavorites(
+                                                productID: product.id
+                                            )
+                                        },
+                                        onCartClick: {
+                                            viewModel.addToCart(
+                                                productID: product.id
+                                            )
+                                        },
                                         product: product
                                     )
                                     .presentationDragIndicator(.visible)
                                 }
                             }
                         }
-                    }
-                }
 
-                // Fallback (iPhone vertical stack)
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Deals of the Day")
-                        .font(.title2).fontWeight(.bold)
-                    if let deal = dealOfTheDay {
-                        Button {
-                            selectedProduct = deal
-                        } label: {
-                            ProductCard(onClick: { toggleFavorites(deal) }, height: 160, product: deal)
+                        VStack(alignment: .leading) {
+                            Text("Best Sellers")
+                                .font(.title2).fontWeight(.bold)
+                            if let bestSellers = iPadBestSellers {
+                                LazyVGrid(columns: iPadColumns, spacing: 16) {
+                                    ForEach(
+                                        bestSellers,
+                                        id: \.self
+                                    ) { product in
+                                        Button {
+                                            selectedProduct = product
+                                        } label: {
+                                            VerticalProductCard(
+                                                onClick: {
+                                                    toggleFavorites(product)
+                                                },
+                                                width: 181,
+                                                height: 256,
+                                                product: product
+                                            )
+                                        }
+                                    }
+                                }
+                                .sheet(item: $selectedProduct) { product in
+                                    NavigationStack {
+                                        Details(
+                                            onFavoriteClick: {
+                                                viewModel.addToFavorites(
+                                                    productID: product.id
+                                                )
+                                            },
+                                            onCartClick: {
+                                                viewModel.addToCart(
+                                                    productID: product.id
+                                                )
+                                            },
+                                            product: product
+                                        )
+                                        .presentationDragIndicator(.visible)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Fallback (iPhone vertical stack)
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Deals of the Day")
+                            .font(.title2).fontWeight(.bold)
+                        if let deal = dealOfTheDay {
+                            Button {
+                                selectedProduct = deal
+                            } label: {
+                                ProductCard(
+                                    onClick: { toggleFavorites(deal) },
+                                    height: 160,
+                                    product: deal
+                                )
+                            }
+                            .sheet(item: $selectedProduct) { product in
+                                NavigationStack {
+                                    Details(
+                                        onFavoriteClick: {
+                                            viewModel.addToFavorites(
+                                                productID: product.id
+                                            )
+                                        },
+                                        onCartClick: {
+                                            viewModel.addToCart(
+                                                productID: product.id
+                                            )
+                                        },
+                                        product: product
+                                    )
+                                    .presentationDragIndicator(.visible)
+                                }
+                            }
+                        }
+
+                        Text("Top picks")
+                            .font(.title2).fontWeight(.bold)
+                        LazyVGrid(columns: columns, spacing: 8) {
+                            ForEach(
+                                Array(
+                                    viewModel.products.values.sorted(by: {
+                                        $0.title < $1.title
+                                    })
+                                ),
+                                id: \.self
+                            ) { product in
+                                Button {
+                                    selectedProduct = product
+                                } label: {
+                                    VerticalProductCard(
+                                        onClick: { toggleFavorites(product) },
+                                        width: 177,
+                                        height: 250,
+                                        product: product
+                                    )
+                                }
+                            }
                         }
                         .sheet(item: $selectedProduct) { product in
                             NavigationStack {
                                 Details(
-                                    onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
-                                    onCartClick: { viewModel.addToCart(productID: product.id) },
+                                    onFavoriteClick: {
+                                        viewModel.addToFavorites(
+                                            productID: product.id
+                                        )
+                                    },
+                                    onCartClick: {
+                                        viewModel.addToCart(
+                                            productID: product.id
+                                        )
+                                    },
                                     product: product
                                 )
-                                    .presentationDragIndicator(.visible)
-                            }
-                        }
-                    }
-
-                    Text("Top picks")
-                        .font(.title2).fontWeight(.bold)
-                    LazyVGrid(columns: columns, spacing: 8) {
-                        ForEach(
-                            Array(
-                                viewModel.products.values.sorted(by: {
-                                    $0.title < $1.title
-                                })
-                            ),
-                            id: \.self
-                        ) { product in
-                            Button {
-                                selectedProduct = product
-                            } label: {
-                                VerticalProductCard(
-                                    onClick: { toggleFavorites(product) },
-                                    width: 177,
-                                    height: 250,
-                                    product: product
-                                )
-                            }
-                        }
-                    }
-                    .sheet(item: $selectedProduct) { product in
-                        NavigationStack {
-                            Details(
-                                onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
-                                onCartClick: { viewModel.addToCart(productID: product.id) },
-                                product: product
-                            )
                                 .presentationDragIndicator(.visible)
+                            }
                         }
                     }
                 }
@@ -311,19 +391,8 @@ struct Home: View {
         }
         .navigationTitle("Home")
     }
-    
+
     private func toggleFavorites(_ product: Product) {
         viewModel.addToFavorites(productID: product.id)
     }
 }
-
-//#Preview {
-//    NavigationStack {
-//        Home(
-//            viewModel: ViewModel(
-//                APIservice: APIService(),
-//                dataSource: SwiftDataService()
-//            )
-//        )
-//    }
-//}

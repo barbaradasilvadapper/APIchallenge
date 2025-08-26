@@ -258,6 +258,7 @@
       }
     },
     "Failed to load categories" : {
+      "extractionState" : "stale",
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
