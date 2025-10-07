@@ -21,7 +21,28 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
     var categories: [Category] = []
     var isLoading: Bool = true
     
+    var selectedProduct: Product?
+    
     var defaultProduct: Product = Product(id: -1, title: "Default product", description: "default description", category: .beauty, price: -1, thumbnail: "", isFavourite: false)
+    
+    var hasLoaded: Bool = false
+
+    var searchText: String = ""
+
+    var topCategories: [Category]? {
+        if categories.isEmpty { return nil }
+        return Array(filteredCategories.prefix(4))
+    }
+
+    var filteredCategories: [Category] {
+        if searchText.isEmpty {
+            return categories
+        } else {
+            return categories.filter {
+                $0.stringValue.lowercased().contains(searchText.lowercased())
+            }
+        }
+    }
     
     func fetch() async {
         isLoading = true

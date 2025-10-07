@@ -11,12 +11,7 @@ struct CategoryFilter: View {
     
     var category: Category
 
-    var viewModel: any CategoriesViewModelProtocol
-    
-    @State var hasLoaded: Bool = false
-
-    @State var searchText: String = ""
-    @State var selectedProduct: Product? = nil
+    @Bindable var viewModel: CategoriesViewModel
 
     var filteredProducts: [Product] {
         let products = viewModel.products.values
@@ -27,12 +22,12 @@ struct CategoryFilter: View {
     
     var searchedProducts: [Product] {
         let products = filteredProducts
-        if searchText.isEmpty {
+        if viewModel.searchText.isEmpty {
             return Array(products)
         }
 
         return products.filter {
-            $0.title.lowercased().contains(searchText.lowercased())
+            $0.title.lowercased().contains(viewModel.searchText.lowercased())
         }
     }
 
@@ -43,7 +38,7 @@ struct CategoryFilter: View {
 
     var body: some View {
         VStack {
-            SearchBar(searchText: $searchText)
+            SearchBar(searchText: $viewModel.searchText)
             Divider()
                 .frame(height: 1)
                 .padding(.vertical, 16)
@@ -53,7 +48,7 @@ struct CategoryFilter: View {
                     ForEach(searchedProducts) {
                         product in
                         Button {
-                            selectedProduct = product
+                            viewModel.selectedProduct = product
                         } label: {
                             VerticalProductCard(
                                 onClick: { viewModel.addToFavorites(productID: product.id) },
@@ -64,7 +59,7 @@ struct CategoryFilter: View {
                         }
                     }
                 }
-                .sheet(item: $selectedProduct) { product in
+                .sheet(item: $viewModel.selectedProduct) { product in
                     NavigationStack {
                         Details(
                             onFavoriteClick: { viewModel.addToFavorites(productID: product.id) },
@@ -80,9 +75,9 @@ struct CategoryFilter: View {
         .navigationTitle(category.stringLocalized.capitalized)
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            if !hasLoaded {
+            if !viewModel.hasLoaded {
                 await viewModel.fetch()
-                hasLoaded = true
+                viewModel.hasLoaded = true
             }
         }
     }

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct OrderCard: View {
-    @State var product: Product
-    @State var selectedProduct: Product?
+    var product: Product
+    var selectedProduct: Product?
     
     var body: some View {
         HStack(spacing: 8) {

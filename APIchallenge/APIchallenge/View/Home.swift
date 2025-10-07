@@ -379,7 +379,8 @@ struct Home: View {
             }
 
         }
-        .padding(16)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 16)
         .onAppear {
             if !hasAppeared {
                 hasAppeared = true

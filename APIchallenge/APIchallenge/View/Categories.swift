@@ -9,39 +9,20 @@ import SwiftUI
 
 struct Categories: View {
 
-    @State var hasLoaded: Bool = false
-
-    @State var searchText: String = ""
-
-    let viewModel: any CategoriesViewModelProtocol
-
-    var topCategories: [Category]? {
-        if viewModel.categories.isEmpty { return nil }
-        return Array(filteredCategories.prefix(4))
-    }
-
-    var filteredCategories: [Category] {
-        if searchText.isEmpty {
-            return viewModel.categories
-        } else {
-            return viewModel.categories.filter {
-                $0.stringValue.lowercased().contains(searchText.lowercased())
-            }
-        }
-    }
+    @Bindable var viewModel: CategoriesViewModel
 
     var body: some View {
         VStack(spacing: 16) {
-            SearchBar(searchText: $searchText)
+            SearchBar(searchText: $viewModel.searchText)
 
-            if let topCategories {
+            if let top = viewModel.topCategories {
                 HStack {
-                    ForEach(topCategories) { category in
+                    ForEach(top) { category in
                         CategoryIcon(category: category)
                     }
                 }
 
-                List(filteredCategories) { category in
+                List(viewModel.filteredCategories) { category in
                     NavigationLink {
                         CategoryFilter(category: category, viewModel: viewModel)
                     } label: {
@@ -64,9 +45,9 @@ struct Categories: View {
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
         .task {
-            if !hasLoaded {
+            if !viewModel.hasLoaded {
                 await viewModel.fetch()
-                hasLoaded = true
+                viewModel.hasLoaded = true
             }
         }
     }

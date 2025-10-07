@@ -15,7 +15,7 @@ struct Details: View {
     let onCartClick: () -> Void
     
     @State var product: Product
-    @State private var goToCart = false
+    var goToCart = false
     
     var body: some View {
         
