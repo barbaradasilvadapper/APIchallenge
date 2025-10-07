@@ -9,51 +9,18 @@ import SwiftData
 import SwiftUI
 
 struct Cart: View {
-    var viewModel: any CartViewModelProtocol
-
-    @State var hasLoaded: Bool = false
-
-    @State var refreshID = UUID()
-
-    @State var cartList: [CartList] = []
-
-    @State var searchText: String = ""
-
-    var total: Double {
-        cart.reduce(0) { result, product in
-            result + Double(product.price)
-                * Double(
-                    cartList.filter { $0.id == product.id }.first!.quantity
-                )
-        }
-    }
-
-    var cart: [Product] {
-        cartList.compactMap {
-            viewModel.products[$0.id]
-        }
-    }
-
-    var searchedProducts: [Product] {
-        if searchText.isEmpty {
-            return cart
-        }
-
-        return cart.filter {
-            $0.title.lowercased().contains(searchText.lowercased())
-        }
-    }
+    @Bindable var viewModel: CartViewModel
 
     var body: some View {
         VStack {
-            SearchBar(searchText: $searchText)
+            SearchBar(searchText: $viewModel.searchText)
 
             if viewModel.isLoading {
                 Spacer()
                 ProgressView()
                 Spacer()
             } else {
-                if cart.isEmpty {
+                if viewModel.cart.isEmpty {
                     EmptyStateCart()
                         .padding(.top, 156)
 
@@ -62,24 +29,24 @@ struct Cart: View {
 
                     ScrollView {
                         VStack(spacing: 16) {
-                            ForEach(searchedProducts, id: \.id) { product in
+                            ForEach(viewModel.searchedProducts, id: \.id) { product in
                                 ProductCounter(
                                     add: {
-                                        let qtd = cartList.filter {
+                                        let qtd = viewModel.list.filter {
                                             $0.id == product.id
                                         }.first!.quantity
                                         if qtd < 9 {
-                                            cartList.filter {
+                                            viewModel.list.filter {
                                                 $0.id == product.id
                                             }.first!.quantity += 1
                                         }
                                     },
                                     remove: {
-                                        let qtd = cartList.filter {
+                                        let qtd = viewModel.list.filter {
                                             $0.id == product.id
                                         }.first!.quantity
                                         if qtd > 1 {
-                                            cartList.filter {
+                                            viewModel.list.filter {
                                                 $0.id == product.id
                                             }.first!.quantity -= 1
                                         } else {
@@ -87,11 +54,11 @@ struct Cart: View {
                                                 productID: product.id,
                                                 quantity: qtd
                                             )
-                                            refreshID = UUID()
+                                            viewModel.refreshID = UUID()
                                         }
                                     },
                                     product: product,
-                                    quantity: cartList.filter {
+                                    quantity: viewModel.list.filter {
                                         $0.id == product.id
                                     }.first!.quantity
                                 )
@@ -110,16 +77,16 @@ struct Cart: View {
 
                             Spacer()
 
-                            Text("US$ \(String(format: "%.2f", total))")
+                            Text("US$ \(String(format: "%.2f", viewModel.total))")
                                 .font(.headline)
                         }
 
                         Button {
-                            cartList.forEach { product in
+                            viewModel.list.forEach { product in
                                 viewModel.addToOrder(productID: product.id)
                             }
                             viewModel.clearCart()
-                            refreshID = UUID()
+                            viewModel.refreshID = UUID()
                         } label: {
                             Text("Checkout")
                                 .font(.body)
@@ -143,15 +110,15 @@ struct Cart: View {
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
         .onAppear {
-            cartList = viewModel.cartList
+            viewModel.list = viewModel.cartList
         }
         .task {
-            if !hasLoaded {
+            if !viewModel.hasLoaded {
                 await viewModel.fetch()
-                hasLoaded = true
+                viewModel.hasLoaded = true
             }
         }
-        .id(refreshID)
+        .id(viewModel.refreshID)
     }
 }
 

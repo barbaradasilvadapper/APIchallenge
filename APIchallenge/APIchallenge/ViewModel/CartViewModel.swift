@@ -24,6 +24,39 @@ final class CartViewModel: CartViewModelProtocol {
     
     var defaultProduct: Product = Product(id: -1, title: "Default product", description: "default description", category: .beauty, price: -1, thumbnail: "", isFavourite: false)
     
+    var hasLoaded: Bool = false
+
+    var refreshID = UUID()
+
+    var list: [CartList] = []
+
+    var searchText: String = ""
+
+    var total: Double {
+        cart.reduce(0) { result, product in
+            result + Double(product.price)
+                * Double(
+                    cartList.filter { $0.id == product.id }.first!.quantity
+                )
+        }
+    }
+
+    var cart: [Product] {
+        cartList.compactMap {
+            products[$0.id]
+        }
+    }
+
+    var searchedProducts: [Product] {
+        if searchText.isEmpty {
+            return cart
+        }
+
+        return cart.filter {
+            $0.title.lowercased().contains(searchText.lowercased())
+        }
+    }
+    
     func fetch() async {
         isLoading = true
         await fetchAllProducts()
