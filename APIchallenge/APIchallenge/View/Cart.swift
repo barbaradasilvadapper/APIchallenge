@@ -85,7 +85,7 @@ struct Cart: View {
                                     product: product,
                                     quantity: viewModel.list.filter {
                                         $0.id == product.id
-                                    }.first!.quantity
+                                    }.first?.quantity ?? 0
                                 )
                             }
                         }
