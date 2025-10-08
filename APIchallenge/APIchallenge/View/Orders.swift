@@ -9,33 +9,11 @@ import SwiftUI
 
 struct Orders: View {
 
-    var viewModel: any OrdersVIewModelProtocol
-
-    @State var hasLoaded: Bool = false
-
-    @State var orderList: [OrderList] = []
-
-    @State var searchText: String = ""
-
-    var orders: [Product] {
-        orderList.compactMap {
-            viewModel.products[$0.id]
-        }
-    }
-
-    var searchedProducts: [Product] {
-        if searchText.isEmpty {
-            return orders
-        }
-
-        return orders.filter {
-            $0.title.lowercased().contains(searchText.lowercased())
-        }
-    }
+    @Bindable var viewModel: OrderViewModel
 
     var body: some View {
         VStack {
-            SearchBar(searchText: $searchText)
+            SearchBar(searchText: $viewModel.searchText)
 
             if viewModel.isLoading {
                 Spacer()
@@ -43,14 +21,14 @@ struct Orders: View {
                 Spacer()
             } else {
 
-                if orders.isEmpty {
+                if viewModel.orders.isEmpty {
                     EmptyStateOrders()
                         .padding(.top, 156)
                 }
 
                 ScrollView {
                     VStack(spacing: 16) {
-                        ForEach(searchedProducts, id: \.id) { product in
+                        ForEach(viewModel.searchedProducts, id: \.id) { product in
                             OrderCard(product: product)
                         }
                     }
@@ -62,12 +40,12 @@ struct Orders: View {
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
         .onAppear {
-            orderList = viewModel.orderList
+            viewModel.list = viewModel.orderList
         }
         .task {
-            if !hasLoaded {
+            if !viewModel.hasLoaded {
                 await viewModel.fetch()
-                hasLoaded = true
+                viewModel.hasLoaded = true
             }
         }
     }

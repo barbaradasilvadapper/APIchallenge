@@ -9,27 +9,12 @@ import SwiftUI
 
 struct Home: View {
 
-    var viewModel: any HomeViewModelProtocol
-    var dealOfTheDay: Product? {
-        viewModel.products.values.first
-    }
-
-    @State var selectedProduct: Product?
-    @State var hasAppeared: Bool = false
+    @Bindable var viewModel: HomeViewModel
 
     let columns = [
         GridItem(.flexible(), spacing: 8),
         GridItem(.flexible(), spacing: 8),
     ]
-
-    /* iPad vars */
-    var iPadDealsOfTheDay: [Product]? {
-        guard let product1 = viewModel.products[1],
-            let product2 = viewModel.products[11]
-        else { return nil }
-
-        return [product1, product2]
-    }
 
     let iPadDealsOfTheDayColumns = [
         GridItem(.flexible(), spacing: 16),
@@ -50,20 +35,6 @@ struct Home: View {
         GridItem(.flexible(), spacing: 0),
         GridItem(.flexible(), spacing: 0),
     ]
-
-    var iPadTopPicks: [Product] {
-        Array(
-            viewModel.products.values.sorted { $0.title < $1.title }.prefix(4)
-        )
-    }
-
-    var iPadBestSellers: [Product]? {
-        Array(
-            viewModel.products.values.sorted { $0.title > $1.title }.dropFirst(
-                4
-            )
-        )
-    }
     /***/
 
     var body: some View {
@@ -78,14 +49,14 @@ struct Home: View {
                     VStack(alignment: .leading, spacing: 16) {
                         Text("Deals of the Day")
                             .font(.title2).fontWeight(.bold)
-                        if let deals = iPadDealsOfTheDay {
+                        if let deals = viewModel.iPadDealsOfTheDay {
                             LazyVGrid(
                                 columns: iPadDealsOfTheDayColumns,
                                 spacing: 0
                             ) {
                                 ForEach(deals) { product in
                                     Button {
-                                        selectedProduct = product
+                                        viewModel.selectedProduct = product
                                     } label: {
                                         ProductCard(
                                             onClick: {
@@ -97,7 +68,7 @@ struct Home: View {
                                     }
                                 }
                             }
-                            .sheet(item: $selectedProduct) { product in
+                            .sheet(item: $viewModel.selectedProduct) { product in
                                 NavigationStack {
                                     Details(
                                         onFavoriteClick: {
@@ -134,7 +105,7 @@ struct Home: View {
                                     id: \.self
                                 ) { product in
                                     Button {
-                                        selectedProduct = product
+                                        viewModel.selectedProduct = product
                                     } label: {
                                         VerticalProductCard(
                                             onClick: {
@@ -147,7 +118,7 @@ struct Home: View {
                                     }
                                 }
                             }
-                            .sheet(item: $selectedProduct) { product in
+                            .sheet(item: $viewModel.selectedProduct) { product in
                                 NavigationStack {
                                     Details(
                                         onFavoriteClick: {
@@ -173,14 +144,14 @@ struct Home: View {
                     VStack(alignment: .leading, spacing: 16) {
                         Text("Deals of the Day")
                             .font(.title2).fontWeight(.bold)
-                        if let deals = iPadDealsOfTheDay {
+                        if let deals = viewModel.iPadDealsOfTheDay {
                             LazyVGrid(
                                 columns: iPadDealsOfTheDayColumns,
                                 spacing: 0
                             ) {
                                 ForEach(deals) { product in
                                     Button {
-                                        selectedProduct = product
+                                        viewModel.selectedProduct = product
                                     } label: {
                                         ProductCard(
                                             onClick: {
@@ -192,7 +163,7 @@ struct Home: View {
                                     }
                                 }
                             }
-                            .sheet(item: $selectedProduct) { product in
+                            .sheet(item: $viewModel.selectedProduct) { product in
                                 NavigationStack {
                                     Details(
                                         onFavoriteClick: {
@@ -217,11 +188,11 @@ struct Home: View {
                                 .font(.title2).fontWeight(.bold)
                             LazyVGrid(columns: iPadColumns, spacing: 16) {
                                 ForEach(
-                                    iPadTopPicks,
+                                    viewModel.iPadTopPicks,
                                     id: \.self
                                 ) { product in
                                     Button {
-                                        selectedProduct = product
+                                        viewModel.selectedProduct = product
                                     } label: {
                                         VerticalProductCard(
                                             onClick: {
@@ -234,7 +205,7 @@ struct Home: View {
                                     }
                                 }
                             }
-                            .sheet(item: $selectedProduct) { product in
+                            .sheet(item: $viewModel.selectedProduct) { product in
                                 NavigationStack {
                                     Details(
                                         onFavoriteClick: {
@@ -257,14 +228,14 @@ struct Home: View {
                         VStack(alignment: .leading) {
                             Text("Best Sellers")
                                 .font(.title2).fontWeight(.bold)
-                            if let bestSellers = iPadBestSellers {
+                            if let bestSellers = viewModel.iPadBestSellers {
                                 LazyVGrid(columns: iPadColumns, spacing: 16) {
                                     ForEach(
                                         bestSellers,
                                         id: \.self
                                     ) { product in
                                         Button {
-                                            selectedProduct = product
+                                            viewModel.selectedProduct = product
                                         } label: {
                                             VerticalProductCard(
                                                 onClick: {
@@ -277,7 +248,7 @@ struct Home: View {
                                         }
                                     }
                                 }
-                                .sheet(item: $selectedProduct) { product in
+                                .sheet(item: $viewModel.selectedProduct) { product in
                                     NavigationStack {
                                         Details(
                                             onFavoriteClick: {
@@ -303,9 +274,9 @@ struct Home: View {
                     VStack(alignment: .leading, spacing: 16) {
                         Text("Deals of the Day")
                             .font(.title2).fontWeight(.bold)
-                        if let deal = dealOfTheDay {
+                        if let deal = viewModel.dealOfTheDay {
                             Button {
-                                selectedProduct = deal
+                                viewModel.selectedProduct = deal
                             } label: {
                                 ProductCard(
                                     onClick: { toggleFavorites(deal) },
@@ -313,7 +284,7 @@ struct Home: View {
                                     product: deal
                                 )
                             }
-                            .sheet(item: $selectedProduct) { product in
+                            .sheet(item: $viewModel.selectedProduct) { product in
                                 NavigationStack {
                                     Details(
                                         onFavoriteClick: {
@@ -345,7 +316,7 @@ struct Home: View {
                                 id: \.self
                             ) { product in
                                 Button {
-                                    selectedProduct = product
+                                    viewModel.selectedProduct = product
                                 } label: {
                                     VerticalProductCard(
                                         onClick: { toggleFavorites(product) },
@@ -356,7 +327,7 @@ struct Home: View {
                                 }
                             }
                         }
-                        .sheet(item: $selectedProduct) { product in
+                        .sheet(item: $viewModel.selectedProduct) { product in
                             NavigationStack {
                                 Details(
                                     onFavoriteClick: {
@@ -379,10 +350,11 @@ struct Home: View {
             }
 
         }
-        .padding(16)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 16)
         .onAppear {
-            if !hasAppeared {
-                hasAppeared = true
+            if !viewModel.hasAppeared {
+                viewModel.hasAppeared = true
 
                 Task {
                     await viewModel.fetch()

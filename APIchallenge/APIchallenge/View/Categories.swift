@@ -9,11 +9,7 @@ import SwiftUI
 
 struct Categories: View {
 
-    @State var hasLoaded: Bool = false
-
-    @State var searchText: String = ""
-
-    let viewModel: any CategoriesViewModelProtocol
+    @Bindable var viewModel: CategoriesViewModel
 
     var topCategories: [Category]? {
         if viewModel.categories.isEmpty { return nil }
@@ -21,18 +17,18 @@ struct Categories: View {
     }
 
     var filteredCategories: [Category] {
-        if searchText.isEmpty {
+        if viewModel.searchText.isEmpty {
             return viewModel.categories
         } else {
             return viewModel.categories.filter {
-                $0.stringValue.lowercased().contains(searchText.lowercased())
+                $0.stringValue.lowercased().contains(viewModel.searchText.lowercased())
             }
         }
     }
 
     var body: some View {
         VStack(spacing: 16) {
-            SearchBar(searchText: $searchText)
+            SearchBar(searchText: $viewModel.searchText)
 
             if let topCategories {
                 HStack {
@@ -64,9 +60,9 @@ struct Categories: View {
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
         .task {
-            if !hasLoaded {
+            if !viewModel.hasLoaded {
                 await viewModel.fetch()
-                hasLoaded = true
+                viewModel.hasLoaded = true
             }
         }
     }

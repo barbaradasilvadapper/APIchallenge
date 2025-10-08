@@ -23,6 +23,28 @@ final class OrderViewModel: OrdersVIewModelProtocol {
     
     var defaultProduct: Product = Product(id: -1, title: "Default product", description: "default description", category: .beauty, price: -1, thumbnail: "", isFavourite: false)
     
+    var hasLoaded: Bool = false
+
+    var list: [OrderList] = []
+
+    var searchText: String = ""
+
+    var orders: [Product] {
+        orderList.compactMap {
+            products[$0.id]
+        }
+    }
+
+    var searchedProducts: [Product] {
+        if searchText.isEmpty {
+            return orders
+        }
+
+        return orders.filter {
+            $0.title.lowercased().contains(searchText.lowercased())
+        }
+    }
+    
     func fetch() async {
         isLoading = true
         await fetchAllProducts()

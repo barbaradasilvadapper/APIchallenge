@@ -9,33 +9,11 @@ import SwiftUI
 
 struct Favorites: View {
 
-    var viewModel: any FavoritesViewModelProtocol
-
-    @State var hasLoaded: Bool = false
-
-    @State var favoritesList: [FavoritesList] = []
-
-    @State var searchText: String = ""
-
-    var favorites: [Product] {
-        favoritesList.compactMap {
-            viewModel.products[$0.id]
-        }
-    }
-
-    var searchedProducts: [Product] {
-        if searchText.isEmpty {
-            return favorites
-        }
-
-        return favorites.filter {
-            $0.title.lowercased().contains(searchText.lowercased())
-        }
-    }
+    @Bindable var viewModel: FavoritesViewModel
 
     var body: some View {
         VStack {
-            SearchBar(searchText: $searchText)
+            SearchBar(searchText: $viewModel.searchText)
 
             if viewModel.isLoading {
                 Spacer()
@@ -43,14 +21,14 @@ struct Favorites: View {
                 Spacer()
             } else {
 
-                if favorites.isEmpty {
+                if viewModel.favorites.isEmpty {
                     EmptyStateFavorites()
                         .padding(.top, 156)
                 }
 
                 ScrollView {
                     VStack(spacing: 16) {
-                        ForEach(searchedProducts, id: \.id) { product in
+                        ForEach(viewModel.searchedProducts, id: \.id) { product in
                             ProductListCart(
                                 onFavoriteClick: {
                                     viewModel.addToFavorites(
@@ -72,12 +50,12 @@ struct Favorites: View {
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
         .onAppear {
-            favoritesList = viewModel.favoritesList
+            viewModel.list = viewModel.favoritesList
         }
         .task {
-            if !hasLoaded {
+            if !viewModel.hasLoaded {
                 await viewModel.fetch()
-                hasLoaded = true
+                viewModel.hasLoaded = true
             }
         }
     }

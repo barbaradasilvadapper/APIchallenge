@@ -23,6 +23,13 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
     
     var defaultProduct: Product = Product(id: -1, title: "Default product", description: "default description", category: .beauty, price: -1, thumbnail: "", isFavourite: false)
     
+    var hasLoaded: Bool = false
+
+    var searchText: String = ""
+    var searchTextFilter: String = ""
+    
+    var selectedProduct: Product? = nil
+    
     func fetch() async {
         isLoading = true
         await fetchAllProducts()

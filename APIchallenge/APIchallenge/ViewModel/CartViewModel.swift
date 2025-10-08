@@ -24,6 +24,15 @@ final class CartViewModel: CartViewModelProtocol {
     
     var defaultProduct: Product = Product(id: -1, title: "Default product", description: "default description", category: .beauty, price: -1, thumbnail: "", isFavourite: false)
     
+    var hasLoaded: Bool = false
+
+    var refreshID = UUID()
+
+    var list: [CartList] = []
+
+    var searchText: String = ""
+    
+    
     func fetch() async {
         isLoading = true
         await fetchAllProducts()

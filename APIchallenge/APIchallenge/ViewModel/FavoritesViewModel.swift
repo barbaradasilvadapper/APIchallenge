@@ -23,6 +23,28 @@ final class FavoritesViewModel: FavoritesViewModelProtocol {
     
     var defaultProduct: Product = Product(id: -1, title: "Default product", description: "default description", category: .beauty, price: -1, thumbnail: "", isFavourite: false)
     
+    var hasLoaded: Bool = false
+
+    var list: [FavoritesList] = []
+
+    var searchText: String = ""
+
+    var favorites: [Product] {
+        favoritesList.compactMap {
+            products[$0.id]
+        }
+    }
+
+    var searchedProducts: [Product] {
+        if searchText.isEmpty {
+            return favorites
+        }
+
+        return favorites.filter {
+            $0.title.lowercased().contains(searchText.lowercased())
+        }
+    }
+    
     func fetch() async {
         isLoading = true
         await fetchAllProducts()

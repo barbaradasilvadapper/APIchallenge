@@ -24,6 +24,36 @@ final class HomeViewModel: HomeViewModelProtocol {
     
     var defaultProduct: Product = Product(id: -1, title: "Default product", description: "default description", category: .beauty, price: -1, thumbnail: "", isFavourite: false)
     
+    var dealOfTheDay: Product? {
+        products.values.first
+    }
+
+    var selectedProduct: Product?
+    var hasAppeared: Bool = false
+    
+    /* iPad vars */
+    var iPadDealsOfTheDay: [Product]? {
+        guard let product1 = products[1],
+            let product2 = products[11]
+        else { return nil }
+
+        return [product1, product2]
+    }
+    
+    var iPadTopPicks: [Product] {
+        Array(
+            products.values.sorted { $0.title < $1.title }.prefix(4)
+        )
+    }
+
+    var iPadBestSellers: [Product]? {
+        Array(
+            products.values.sorted { $0.title > $1.title }.dropFirst(
+                4
+            )
+        )
+    }
+    
     func fetch() async {
         isLoading = true
         await fetchAllProducts()
