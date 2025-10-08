@@ -15,7 +15,7 @@ struct Persistence {
     static let shared = Persistence()
     
     @MainActor
-    init() {
+    private init() {
         self.modelContainer = try! ModelContainer(for: FavoritesList.self, CartList.self, OrderList.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
         self.modelContext = modelContainer.mainContext
     }

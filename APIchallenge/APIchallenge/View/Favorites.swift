@@ -51,12 +51,16 @@ struct Favorites: View {
         .toolbarBackground(.backgroundsTertiary, for: .tabBar)
         .onAppear {
             viewModel.list = viewModel.favoritesList
-        }
-        .task {
-            if !viewModel.hasLoaded {
-                await viewModel.fetch()
-                viewModel.hasLoaded = true
+            
+            Task {
+                    await viewModel.fetch()
+                    viewModel.hasLoaded = true
             }
+        }
+        .refreshable {
+            viewModel.hasLoaded = false
+            await viewModel.fetch()
+            viewModel.hasLoaded = true
         }
     }
 }
